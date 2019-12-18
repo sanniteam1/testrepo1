@@ -1,0 +1,376 @@
+﻿@{
+    ViewData["Title"] = "RoomDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ReservationModel
+<body>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/moment.js"></script>
+    <div id="react-app">
+        <div class="sh-site" data-reactroot="" data-reactid="1" data-react-checksum="-1607625898">
+            <section class="sh-content" data-reactid="2">
+                <div class="sh-room_detail" data-reactid="14">
+                    <div class="sh-room_detail-search" data-reactid="15">
+                        <div class="sh-search sh-search--info" data-reactid="16">
+                            <div class="sh-search-wrapper" data-reactid="17">
+                                <ul class="sh-search-inputs" data-reactid="18">
+                                    <li class="sh-search-group" data-reactid="19"></li>
+                                    <li class="sh-search-group" data-reactid="20">@Model.StartDate.ToString("MMM dd") - @Model.EndDate.ToString("MMM dd")</li>
+                                    <li class="sh-search-group" data-reactid="21">@Model.Rooms Room, @(Model.Adults + Model.Kids + Model.Babies) Guest</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="sh-room_detail-back" href="@Url.Action("SearchRooms", "Home", Model)" data-reactid="22">
+                        <i class="sh-room_detail-arrow icon-sh-chevron" data-reactid="23"></i>Back to hotels
+                    </a>
+                    <header class="sh-room_detail-background" data-reactid="25"></header>
+
+                    <div class="sh-room_detail-show_small" data-reactid="26" name="popup">
+                        <div class="sh-room_detail-filters this-popup" data-reactid="28">
+                            <header class="sh-modal-header">
+                                <div class="sh-modal-title">
+                                    <span>Your Reservation Details</span>
+                                    <span class="sh-modal-close"><i class="icon-sh-close"></i></span>
+                                </div>
+                                <div class="sh-modal-picture"></div>
+                            </header>
+
+                            <section class="sh-modal-body">
+                                <div class="sh-modal-row">
+                                    <span class="sh-room_detail-smalltitle">Thanks @FakeAuthSettings.Name,</span>
+                                    <span class="sh-room_detail-small">Your booking at <span class="place-name"></span> is confirmed.</span>
+                                </div>
+                                <div class="sh-modal-row">
+                                    <span class="sh-room_detail-smalltitle place-name">Sh360 Platinum Newark</span>
+                                    <span class="sh-room_detail-small place-street">1358 Ikeku Circle</span>
+                                    <span class="sh-room_detail-small place-city">Newark, United States</span>
+                                </div><div class="sh-modal-row row">
+                                    <div class="col-xs-6">
+                                        <span class="sh-room_detail-small">Check-in</span>
+                                        <span class="sh-room_detail-smalltitle">@Model.StartDate.ToString("ddd, MMM dd yyy")</span>
+                                    </div><div class="col-xs-6">
+                                        <span class="sh-room_detail-small">Check-out</span>
+                                        <span class="sh-room_detail-smalltitle">@Model.EndDate.ToString("ddd, MMM dd yyy")</span>
+                                    </div>
+                                </div><div class="sh-modal-row row">
+                                    <div class="col-xs-4">
+                                        <span class="sh-room_detail-small">Room</span><span class="sh-room_detail-smalltitle">@Model.Rooms Rooms</span>
+                                    </div><div class="col-xs-4">
+                                        <span class="sh-room_detail-small">Guests</span>
+                                        <span class="sh-room_detail-smalltitle">@( Model.Adults + Model.Kids + Model.Babies ) Guests</span>
+                                    </div><div class="col-xs-4">
+                                        <span class="sh-room_detail-small">Per night</span><span class="sh-room_detail-smalltitle day-price"></span>
+                                    </div>
+                                </div>
+                            </section>
+                            <footer class="sh-modal-footer">
+                                <div class="sh-room_detail-grow">
+                                    <img class="sh-modal-logo" src="/assets/images/logo.svg">
+                                </div>
+                                <div class="sh-modal-total">
+                                    <span class="sh-modal-small">Total</span>
+                                    <span class="sh-modal-price total-price"></span>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+
+                    <section class="sh-room_detail-wrapper" data-reactid="56">
+                        <div class="sh-room_detail-column sh-room_detail-column--left" data-reactid="57">
+                            <ul class="sh-room_detail-tabs" data-reactid="58">
+                                <li class="sh-room_detail-tab is-active" data-reactid="59" name="info-tab">The Hotel</li>
+                                <li class="sh-room_detail-tab " data-reactid="60" name="review-tab">Reviews</li>
+                            </ul>
+                            <div class="sh-room_detail-content" data-reactid="61">
+                                <div class="sh-room_detail-content">
+                                    <header class="sh-room_detail-header">
+                                        <div class="sh-room_detail-group">
+                                            <span class="sh-room_detail-title"></span>
+                                            <div class="sh-room_detail-stars">
+                                                <i class="sh-room_detail-star active icon-sh-star hotel-star"></i>
+                                                <i class="sh-room_detail-star active icon-sh-star hotel-star"></i>
+                                                <i class="sh-room_detail-star active icon-sh-star hotel-star"></i>
+                                                <i class="sh-room_detail-star active icon-sh-star hotel-star"></i>
+                                                <i class="sh-room_detail-star active icon-sh-star hotel-star"></i>
+                                            </div>
+                                        </div><span class="sh-room_detail-location"></span>
+                                    </header>
+                                    <div name="reviews-hotel">
+                                        <div class="sh-room_detail-extra">
+                                            <ul class="sh-room_detail-reviews"></ul>
+                                        </div>
+                                    </div>
+                                    <div name="description-hotel">
+                                        <article class="sh-room_detail-description"></article>
+                                        <h3 class="sh-room_detail-subtitle">Services</h3>
+                                        <div class="sh-room_detail-extra">
+                                            <ul class="sh-room_detail-services">
+                                                <li class="sh-room_detail-service" data-sid="1">
+                                                    <i class="sh-room_detail-service_icon icon-sh-wifi"></i>
+                                                    <span>Free Wi-fi</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="2">
+                                                    <i class="sh-room_detail-service_icon icon-sh-parking"></i>
+                                                    <span>Parking</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="3">
+                                                    <i class="sh-room_detail-service_icon icon-sh-tv"></i><span>TV</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="4">
+                                                    <i class="sh-room_detail-service_icon icon-sh-air-conditioning"></i>
+                                                    <span>Air conditioning</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="5">
+                                                    <i class="sh-room_detail-service_icon icon-sh-dryer"></i><span>Dryer</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="6">
+                                                    <i class="sh-room_detail-service_icon icon-sh-indoor-fireplace">
+                                                    </i><span>Indoor fireplace</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="7">
+                                                    <i class="sh-room_detail-service_icon icon-sh-table"></i><span>Laptop workspace</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="8">
+                                                    <i class="sh-room_detail-service_icon icon-sh-breakfast"></i>
+                                                    <span>Breakfast</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="9">
+                                                    <i class="sh-room_detail-service_icon icon-sh-kid-friendly">
+                                                    </i><span>Kid friendly</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="10">
+                                                    <i class="sh-room_detail-service_icon icon-sh-airport-shutle"></i><span>Airport shuttle</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="11">
+                                                    <i class="sh-room_detail-service_icon icon-sh-pool"></i><span>Swimming pool</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="12">
+                                                    <i class="sh-room_detail-service_icon icon-sh-fitness-centre">
+                                                    </i><span>Fitness centre</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="13">
+                                                    <i class="sh-room_detail-service_icon icon-sh-gym">
+                                                    </i><span>Gym</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="14">
+                                                    <i class="sh-room_detail-service_icon icon-sh-hot-tub"></i><span>Hot tub</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="15">
+                                                    <i class="sh-room_detail-service_icon icon-sh-lunch">
+                                                    </i><span>Restaurant</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="16">
+                                                    <i class="sh-room_detail-service_icon icon-sh-wheelchair-accessible"></i><span>Wheelchair accessible</span>
+                                                </li>
+                                                <li class="sh-room_detail-service" data-sid="17">
+                                                    <i class="sh-room_detail-service_icon icon-sh-elevator"></i><span>Elevator</span>
+                                                </li>
+                                            </ul>
+                                        </div><div class="sh-room_detail-extra">
+                                            <h3 class="sh-room_detail-subtitle">Information</h3>
+                                            <div class="sh-room_detail-extra">
+                                                <h4 class="sh-room_detail-smalltitle">Check-In/Out</h4>
+                                                <p class="sh-room_detail-text">03:00 PM / 12:00 PM</p>
+                                            </div>
+                                            <div class="sh-room_detail-extra">
+                                                <h4 class="sh-room_detail-smalltitle">Cancellation policy</h4>
+                                                <p class="sh-room_detail-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                            </div>
+                                        </div>
+                                        <div class="sh-room_detail-extra">
+                                            <h3 class="sh-room_detail-subtitle">Gallery </h3>
+                                            <ul class="sh-room_detail-gallery"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sh-room_detail-column sh-room_detail-column--right" data-reactid="94">
+                            <aside class="sh-room_detail-filters" data-reactid="95">
+                                <header class="sh-room_detail-filter_header" data-reactid="96">
+                                    <span class="sh-room_detail-filter_title total-price" data-reactid="97">0</span>
+                                    <span data-reactid="98">Total</span>
+                                </header><section class="sh-room_detail-info" data-reactid="99">
+                                    <div class="sh-room_detail-title" data-reactid="100"></div>
+                                    <span class="sh-room_detail-location u-display-block" data-reactid="101"></span>
+                                    <span class="sh-room_detail-phone u-display-block" data-reactid="102"></span>
+                                    <div class="sh-room_detail-extra sh-room_detail-extra--double row" data-reactid="103">
+                                        <div class="col-xs-6" data-reactid="104">
+                                            <span class="sh-room_detail-small" data-reactid="105">Check-In</span>
+                                            <span class="sh-room_detail-smalltitle" data-reactid="106">@Model.StartDate.ToString("ddd, MMM dd yyy")</span>
+                                        </div>
+                                        <div class="col-xs-6" data-reactid="107">
+                                            <span class="sh-room_detail-small" data-reactid="108">Check-Out</span>
+                                            <span class="sh-room_detail-smalltitle" data-reactid="109">@Model.EndDate.ToString("ddd, MMM dd yyy")</span>
+                                        </div>
+                                    </div>
+                                    <div class="sh-room_detail-extra row" data-reactid="110">
+                                        <div class="col-xs-4" data-reactid="111">
+                                            <span class="sh-room_detail-small" data-reactid="112">Room</span>
+                                            <span class="sh-room_detail-smalltitle" data-reactid="113">@Model.Rooms Room</span>
+                                        </div>
+                                        <div class="col-xs-4" data-reactid="114">
+                                            <span class="sh-room_detail-small" data-reactid="115">Guests</span>
+                                            <span class="sh-room_detail-smalltitle" data-reactid="116">@( Model.Adults + Model.Kids + Model.Babies ) Guest</span>
+                                        </div>
+                                        <div class="col-xs-4" data-reactid="117">
+                                            <span class="sh-room_detail-small" data-reactid="118">Per night</span><!-- react-text: 119 --><!-- /react-text -->
+                                            <span class="sh-room_detail-smalltitle day-price" data-reactid="120"></span>
+                                        </div>
+                                    </div>
+                                    <div class="sh-room_detail-extra" data-reactid="121">
+                                        @if (FakeAuthSettings.IsLoggedIn)
+                                        {
+                                            <span class="sh-room_detail-book btn book-now" data-reactid="176">Book now</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="sh-room_detail-book btn is-disabled" data-reactid="55">Login to book</span>
+                                        }
+                                    </div>
+                                </section>
+                            </aside>
+                        </div>
+                    </section><!-- react-empty: 123 -->
+                </div><!-- react-empty: 124 -->
+            </section>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('[name="info-tab"]').click(function () {
+                $('[name="reviews-hotel"]').hide();
+                $('[name="description-hotel"]').show();
+                $('[name="info-tab"]').addClass('is-active');
+                $('[name="review-tab"]').removeClass('is-active');
+            });
+
+            $('[name="review-tab"]').click(function () {
+                $('[name="reviews-hotel"]').show();
+                $('[name="description-hotel"]').hide();
+                $('[name="info-tab"]').removeClass('is-active');
+                $('[name="review-tab"]').addClass('is-active');
+            });
+
+            $('[name="reviews-hotel"]').hide();
+            $('[name="description-hotel"]').show();
+            $.ajax({
+                method: "GET",
+                url: "api/DataAPI/getHotel",
+                data : { id : @Model.RoomId },
+                success: function (result) {
+
+                    var total = 0;
+                    $(".sh-room_detail-background").css("background-image", "url(assets/images/" + result.defaultPicture + ")");
+                    $(".sh-modal-picture").css("background-image", "url(assets/images/" + result.defaultPicture + ")");
+
+                    for (var t = 0; t < result.pictures.length; t++) {
+                        $('.sh-room_detail-gallery').append('<li class="sh-room_detail-picture" style="background-image: url(assets/images/' + result.pictures[t] + ')"></li>');
+                    }
+                    $(".sh-room_detail-description").html(result.description);
+                    $(".sh-room_detail-title").html(result.name);
+                    $(".place-name").html(result.name);
+                    $(".place-street").html(result.street);
+                    $(".place-city").html(result.city);
+
+                    $(".sh-room_detail-location").html(result.city);
+                    $(".sh-room_detail-service").hide();
+                    for (var t = 0; t < result.services.length; t++) {
+                        $('[data-sid="' + result.services[t].id + '"]').show();
+                    }
+                    
+
+                    var startDate = new Date('@Model.StartDate');
+                    var endDate = new Date('@Model.EndDate');
+                    var millisecondsPerDay = 1000 * 60 * 60 * 24;
+                    var millisBetween = startDate.getTime() - endDate.getTime();
+                    var days = millisBetween / millisecondsPerDay;
+                    var difference = Math.floor(days) * (-1);
+        
+                    total = @(Model.Rooms) * result.rooms[0].roomPrice * difference; 
+                    @*  total = @(Model.Rooms) * result.rooms[0].roomPrice;*@  
+
+                            if (result.rooms[0].discountApplied > 0) {
+                                total = total - (total * result.rooms[0].discountApplied / 100);
+                            }
+
+                            $('.day-price').html('$' + result.rooms[0].roomPrice);
+
+
+
+
+                    $('.total-price').html('$' + total);
+
+                    for (var i = 0; i < result.rating; i++) {
+
+                        $('.hotel-star').addClass('is-active');
+                    }
+                }
+            });
+
+            $.ajax({
+                method: "GET",
+                url: "api/DataAPI/getReviews",
+                success: function (result) {
+
+                    for (var t = 0; t < result.length; t++) {
+                        var template = `<li class="sh-room_detail-review">
+                                                    <header class="sh-room_detail-review_header">
+                                                        <div>
+                                                            <span class="sh-room_detail-subtitle u-pr-2">` + result[t].user + `</span>
+                                                            <span class="sh-room_detail-smalltitle u-pr-2">` + result[t].room + `</span>
+                                                            <span class="sh-room_detail-date">` + moment(result[t].date).format('LL') + `</span>
+                                                        </div><div>
+                                                            <i class="sh-room_detail-star active icon-sh-star ` + ((result[t].rating >= 1) ? 'is-active' : '') + `"></i>
+                                                            <i class="sh-room_detail-star active icon-sh-star ` + ((result[t].rating >= 2) ? 'is-active' : '') + `"></i>
+                                                            <i class="sh-room_detail-star active icon-sh-star ` + ((result[t].rating >= 3) ? 'is-active' : '') + `"></i>
+                                                            <i class="sh-room_detail-star active icon-sh-star ` + ((result[t].rating >= 4) ? 'is-active' : '') + `"></i>
+                                                            <i class="sh-room_detail-star active icon-sh-star ` + ((result[t].rating >= 5) ? 'is-active' : '') + `"></i>
+                                                        </div>
+                                                    </header><div class="sh-room_detail-extra">
+                                                        <p class="sh-room_detail-text">` + result[t].message + `</p>
+                                                    </div>
+                                                </li>`;
+
+                        $('.sh-room_detail-reviews').append(template);
+                    }
+                 }
+            });
+
+            $('.book-now').click(function () {
+                $('.shadow').css('height', $('body').css('height')).css('width', '100%').css('position', 'fixed').css('z-index', '100').css('background-color', '#cdcdcd').css('opacity', '0.7');
+                $('.shadow').after($('[name="popup"]').html());
+                $('.this-popup').css('width', '45%').css('position', 'absolute').css('z-index', '10000').css('top', '50px').css('height', '620px');
+                window.scrollTo(0, 0);
+                $('.shadow').click(function () {
+                    $('.shadow').hide();
+                    $('.this-popup').hide();
+                });
+                $('.book-now-2').click(function () {
+                    $('.shadow').hide();
+                    $('.this-popup').hide();
+                });
+                $('.sh-modal-close').click(function () {
+                    $('.shadow').hide();
+                    $('.this-popup').hide();
+                });
+                $('.book-now').addClass('is-disabled');
+                 $.ajax({
+                    method: "POST",
+                    url: "api/DataAPI/bookConfirmation",
+                    data: { id: "@Model.RoomId", checkinDate : "@Model.StartDate", checkoutDate : "@Model.EndDate", roomCout: "@Model.Rooms" },
+                     success: function (result) {
+                         console.log(result);
+                    },
+                    failed: function (result) {
+                        console.log("Failed");
+                    },
+                });
+            });
+        });
+
+    </script>
+</body>

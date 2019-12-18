@@ -1,0 +1,313 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "_artifactsLocation": {
+          "type": "string",
+          "metadata":{"description":"Do not modify"}
+      },
+      "_artifactsLocationSasToken": {
+          "type": "securestring",
+          "metadata":{"description":"Do not modify"}
+      }, 
+      "owner": {
+          "type": "string",
+          "defaultValue": "Yno",
+          "metadata":{"description":"Owner of the ResourceGroup/ Subscription"}
+      },
+      "team": {
+          "type": "string",
+          "defaultValue": "Innovation",
+          "metadata":{"description":"Team Name"}
+      },
+      "environment": {
+          "type": "string",
+          "defaultValue": "dev",
+          "metadata":{"description":"Environment"}
+      },
+      "program": {
+          "type": "string",
+          "defaultValue": "mep",
+          "metadata":{"description":"Name of the Program"}
+      },
+      "project": {
+          "type": "string",
+          "defaultValue": "adepsq",
+          "metadata":{"description":"Name of the Project"}
+      },
+      "purpose":  {
+          "type": "string",
+          "defaultValue": "adep",
+          "metadata":{"description":"Purpose of the Deployment"}
+      },
+      "hostingPlanName":{
+        "type": "string",
+        "metadata": {
+            "description":"App Service Hosting Plan Name"
+        }
+    },
+    "siteName":{
+      "type": "string",
+      "metadata": {
+          "description":"App Service Hosting Plan Name"
+      }
+  },
+    "appServiceKind":{
+      "type": "string",      
+      "metadata": {
+          "description":"App Service Kind"
+      }
+  },
+      "webAppSKU":{
+        "type": "string",
+          "allowedValues": [
+            "F1",
+            "D1",
+            "B1",
+            "B2",
+            "B3",
+            "S1",
+            "S2",
+            "S3",
+            "P1",
+            "P2",
+            "P3",
+            "P4"
+          ],
+    "defaultValue": "B2",
+    "metadata": {
+      "description": "The pricing tier for the hosting plan."
+        }
+      },
+      "sqlAdmin":{
+        "type":"string",
+        "metadata": {"description":"SQL Server Admin Name"},
+        "defaultValue": "sqladmin"
+    },
+    "sqlAdminPassword":{
+      "type":"securestring",
+      "metadata": {"description":"Password for SQL Server Admin"}
+    },
+    "azureSqlServerName": {
+      "type": "string",
+      "metadata": { "description": "Azure SQL Database Server Instance Name for Service" }
+    },
+    "azureSqlDbName": {
+      "type": "string",
+      "metadata": { "description": "Azure SQL Database Name for Service" }
+    },
+    "azureSqlPerformanceLevelSKU": {
+      "type": "string",
+      "defaultValue": "S0",
+      "allowedValues": [
+        "B",
+        "S0",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S6",
+        "S7",
+        "S9",
+        "S12",
+        "P1",
+        "P2",
+        "P4",
+        "P5",
+        "P6",
+        "P11",
+        "P15"
+      ],
+      "metadata": { "description": "Please Refer @ https://azure.microsoft.com/en-in/pricing/details/sql-database/single/" }
+    },
+    "azureSQLCollation": {
+      "type": "string",
+      "metadata": { "description": "Azure SQL Database Collation" }
+    },
+    "enableSQLServerAuditing": {
+      "type": "string",
+      "defaultValue": "Enabled",
+      "metadata": { "description": "Enable SQL server level auditing" }
+    },
+    "enableSQLServerThreatDetection": {
+      "type": "string",
+      "defaultValue": "Enabled",
+      "metadata": { "description": "Enable SQL server Threat Detection" }
+    },
+    "transparentDataEncryption": {
+      "type": "string",
+      "defaultValue": "Enabled",
+      "allowedValues": [
+          "Enabled",
+          "Disabled"
+      ],
+      "metadata": { "description": "Enable Transparent Data Encryption at Database Level" }
+    },
+    "serverLogRetentionDays": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": { "description": "Number of days to keep server level audit and threat detaction logs" }
+    },
+    "emailAddresses": {
+      "type": "string",
+      "defaultValue": "abcd@efg.com",
+      "metadata": { "description": "Email address to send the threat information" }
+    },
+  "automaticTuning":{
+      "type": "string",
+      "defaultValue": "Enabled",
+      "allowedValues": [
+          "Enabled",
+          "Default",
+          "Disabled"
+      ],
+      "metadata": { "description": "Enable Automatic Tuning" }  
+  },
+    "auditingPolicies_Default_name": {
+      "defaultValue": "Default",
+      "type": "String"
+      }   
+     
+    },
+    "variables": {
+        "comments":"Copyrights @ AMEP",
+        "config_web_name":"web",     
+        "siteName":"[concat(parameters('program'),parameters('project'))]",
+        "storageAccountName":"[concat(parameters('program'),parameters('project'),'logstr')]",
+        "appInsightsName":"[concat(parameters('program'),parameters('project'),'-appinsight')]",
+        "templateURI":{
+            "templateLocation":".",
+            "storageTemplate":"MEP-AzureStorageV2.json",
+            "sqlServerTemplate":"MEP-AzureSQL.json",
+            "sqWebTemplate":"MEP-SQ-WebAppContainer.json",
+            "appServicePlan":"MEP-Azure-AppService-Linux.json",
+            "webAppTemplate":"MEP-WebAPP-Linux-Container.json"            
+        }
+     },
+    "resources": [    
+          {
+            "type": "Microsoft.Resources/deployments",
+            "name": "AzureAppServicePlan-Deployment",
+            "dependsOn": [],
+            "apiVersion": "2015-01-01",           
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+      
+                "uri": "[concat(parameters('_artifactsLocation'),'/',variables('templateURI').templateLocation,'/',variables('templateURI').appServicePlan,parameters('_artifactsLocationSasToken'))]",
+                "contentVersion": "1.0.0.0"
+              },
+              "parameters": {
+                "_artifactsLocation": { "value": "[parameters('_artifactsLocation')]" },
+                "_artifactsLocationSasToken": { "value": "[parameters('_artifactsLocationSasToken')]" },
+                "owner": { "value": "[parameters('owner')]" },
+                "team": { "value": "[parameters('team')]" },
+                "environment": { "value": "[parameters('environment')]" },
+                "program": { "value": "[parameters('program')]" },
+                "project": { "value": "[parameters('project')]" },
+                "purpose": { "value": "[parameters('purpose')]" },
+                "hostingPlanName": { "value": "[parameters('hostingPlanName')]" },
+                "webAppSKU":{"value": "[parameters('webAppSKU')]"},
+                "appServiceKind":{"value": "[parameters('appServiceKind')]"}           
+              }
+            }
+          },
+          {
+            "type": "Microsoft.Resources/deployments",
+            "name": "AzureLogStorage-Deployment",
+            "dependsOn": [],
+            "apiVersion": "2015-01-01",           
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+      
+                "uri": "[concat(parameters('_artifactsLocation'),'/',variables('templateURI').templateLocation,'/',variables('templateURI').storageTemplate,parameters('_artifactsLocationSasToken'))]",
+                "contentVersion": "1.0.0.0"
+              },
+              "parameters": {
+                "_artifactsLocation": { "value": "[parameters('_artifactsLocation')]" },
+                "_artifactsLocationSasToken": { "value": "[parameters('_artifactsLocationSasToken')]" },
+                "owner": { "value": "[parameters('owner')]" },
+                "team": { "value": "[parameters('team')]" },
+                "environment": { "value": "[parameters('environment')]" },
+                "program": { "value": "[parameters('program')]" },
+                "project": { "value": "[parameters('project')]" },
+                "purpose": { "value": "[parameters('purpose')]" },
+                "storageAccountName": { "value": "[variables('storageAccountName')]" }          
+              }
+            }
+          },
+          {
+            "type": "Microsoft.Resources/deployments",
+            "name": "AzureSQWebApp-Deployment",
+            "dependsOn": ["[concat('Microsoft.Resources/deployments/','AzureLogStorage-Deployment')]" ,
+            "[concat('Microsoft.Resources/deployments/','AzureAppServicePlan-Deployment')]",
+            "[concat('Microsoft.Resources/deployments/','AzureSQL-Deployment')]"
+           ],
+            "apiVersion": "2015-01-01",           
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+      
+                "uri": "[concat(parameters('_artifactsLocation'),'/',variables('templateURI').templateLocation,'/',variables('templateURI').sqWebTemplate,parameters('_artifactsLocationSasToken'))]",
+                "contentVersion": "1.0.0.0"
+              },
+              "parameters": {
+                "_artifactsLocation": { "value": "[parameters('_artifactsLocation')]" },
+                "_artifactsLocationSasToken": { "value": "[parameters('_artifactsLocationSasToken')]" },
+                "owner": { "value": "[parameters('owner')]" },
+                "team": { "value": "[parameters('team')]" },
+                "environment": { "value": "[parameters('environment')]" },
+                "program": { "value": "[parameters('program')]" },
+                "project": { "value": "[parameters('project')]" },
+                "purpose": { "value": "[parameters('purpose')]" },
+                "sqlAdmin": { "value": "[parameters('sqlAdmin')]" },
+                "sqlAdminPassword": { "value": "[parameters('sqlAdminPassword')]" },
+                "azureSqlServerName": { "value": "[parameters('azureSqlServerName')]" },
+                "azureSqlDbName": { "value": "[parameters('azureSqlDbName')]" },
+                "hostingPlanName": { "value": "[parameters('hostingPlanName')]" },       
+                "siteName": { "value": "[parameters('siteName')]" },
+                "appServiceKind":{"value": "[parameters('appServiceKind')]"}                       
+              }
+            }
+          },
+          {
+            "type": "Microsoft.Resources/deployments",
+            "name": "AzureSQL-Deployment",
+            "dependsOn": ["[concat('Microsoft.Resources/deployments/','AzureLogStorage-Deployment')]" ],
+            "apiVersion": "2015-01-01",           
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {      
+                "uri": "[concat(parameters('_artifactsLocation'),'/',variables('templateURI').templateLocation,'/',variables('templateURI').sqlServerTemplate,parameters('_artifactsLocationSasToken'))]",
+                "contentVersion": "1.0.0.0"
+              },
+              "parameters": {
+                "_artifactsLocation": { "value": "[parameters('_artifactsLocation')]" },
+                "_artifactsLocationSasToken": { "value": "[parameters('_artifactsLocationSasToken')]" },
+                "owner": { "value": "[parameters('owner')]" },
+                "team": { "value": "[parameters('team')]" },
+                "environment": { "value": "[parameters('environment')]" },
+                "program": { "value": "[parameters('program')]" },
+                "project": { "value": "[parameters('project')]" },
+                "purpose": { "value": "[parameters('purpose')]" },
+                "sqlAdmin": { "value": "[parameters('sqlAdmin')]" },
+                "sqlAdminPassword": { "value": "[parameters('sqlAdminPassword')]" },
+                "azureSqlServerName": { "value": "[parameters('azureSqlServerName')]" },
+                "azureSqlDbName": { "value": "[parameters('azureSqlDbName')]" },
+                "azureSqlPerformanceLevelSKU": { "value": "[parameters('azureSqlPerformanceLevelSKU')]" },
+                "enableSQLServerAuditing": { "value": "[parameters('enableSQLServerAuditing')]" },
+                "enableSQLServerThreatDetection": { "value": "[parameters('enableSQLServerThreatDetection')]" },
+                "transparentDataEncryption": { "value": "[parameters('transparentDataEncryption')]" },
+                "serverLogRetentionDays": { "value": "[parameters('serverLogRetentionDays')]" },
+                "emailAddresses": { "value": "[parameters('emailAddresses')]" },
+                "automaticTuning": { "value": "[parameters('automaticTuning')]" },
+                "auditingPolicies_Default_name": { "value": "[parameters('auditingPolicies_Default_name')]" },  
+                "azureSQLCollation": { "value": "[parameters('azureSQLCollation')]" },
+                "storageAccountName": { "value": "[variables('storageAccountName')]" }                  
+              }
+            }
+          }        
+     ],
+    "outputs": { }
+  }

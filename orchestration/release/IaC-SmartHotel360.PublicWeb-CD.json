@@ -1,0 +1,898 @@
+{
+    "source": 2,
+    "revision": 9,
+    "description": null,
+    "createdBy": {
+        "displayName": "",
+        "url": "",
+        "_links": {
+            "avatar": {
+                "href": ""
+            }
+        },
+        "id": "",
+        "uniqueName": "",
+        "imageUrl": "",
+        "descriptor": ""
+    },
+    "createdOn": "",
+    "modifiedBy": {
+        "displayName": "",
+        "url": "",
+        "_links": {
+            "avatar": {
+                "href": ""
+            }
+        },
+        "id": "",
+        "uniqueName": "",
+        "imageUrl": "",
+        "descriptor": ""
+    },
+    "modifiedOn": "",
+    "isDeleted": false,
+    "variables": {
+        "appInsightsName": {
+            "value": "\"$(program)$(project)-appinsights\""
+        },
+        "azDoToken": {
+            "value": "--AZDOTOKEN--",
+            "isSecret": true
+        },
+        "containerName": {
+            "value": "stage"
+        },
+        "environment": {
+            "value": "Dev"
+        },
+        "location": {
+            "value": "westeurope"
+        },
+        "owner": {
+            "value": "\"Yno (sonny.boy.l.que@accenture.com)\""
+        },
+        "program": {
+            "value": "--PROGRAM--"
+        },
+        "project": {
+            "value": "--PROJECT--"
+        },
+        "purpose": {
+            "value": "\"Asset Development\""
+        },
+        "resourceGroup": {
+            "value": "$(program)-$(project)-$(environment)"
+        },
+        "rgForCommonService": {
+            "value": "$(program)-$(project)-common"
+        },
+        "sqlAdminPassword": {
+            "value": "--SQLSERVERPWD--"
+        },
+        "team": {
+            "value": "Innovation"
+        }
+    },
+    "variableGroups": [],
+    "environments": [
+        {
+            "id": 1,
+            "name": "SH360_CS",
+            "rank": 1,
+            "owner": {
+                "displayName": null,
+                "id": "b7859da1-d0a9-42d3-bff1-9574bfa8db50"
+            },
+            "variables": {
+                "appServiceKind": {
+                    "value": "linux"
+                },
+                "artifactStorage": {
+                    "value": "$(program)$(project)csartstr"
+                },
+                "azDoOauth": {
+                    "value": "--AZDOOAUTH--",
+                    "isSecret": true
+                },
+                "azDoOrg": {
+                    "value": "--AZDOORG--"
+                },
+                "azDoPAT": {
+                    "value": "--AZDOPAT--",
+                    "isSecret": true                  
+                },
+                "azDoProject": {
+                    "value": "--AZDOPROJECT--"
+                },
+                "azureSQLCollation": {
+                    "value": "Latin1_General_100_CS_AS"
+                },
+                "azureSqlDbName": {
+                    "value": "$(program)$(project)db"
+                },
+                "azureSqlServerName": {
+                    "value": "$(program)$(project)sql"
+                },
+                "environment": {
+                    "value": "Common"
+                },
+                "hostingPlanName": {
+                    "value": "\"$(program)-$(project)-sq-appservice\""
+                },
+                "siteName": {
+                    "value": "$(program)$(project)sq"
+                }
+            },
+            "variableGroups": [],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 1
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": 1
+                }
+            },
+            "deployStep": {
+                "id": 4
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 5
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": 2
+                }
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": 0
+                        },
+                        "agentSpecification": null,
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": [
+                                {
+                                    "alias": "_--BUILDDEFINITIONNAME--",
+                                    "artifactType": "Build",
+                                    "artifactDownloadMode": "All",
+                                    "artifactItems": []
+                                }
+                            ]
+                        },
+                        "queueId": "--QUEUEID--",
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": 1,
+                    "name": "Agent job",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+                            "version": "3.*",
+                            "name": "Create RG with Tags",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "--AZUREENDPOINTID--",
+                                "ScriptType": "FilePath",
+                                "ScriptPath": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/drop/scripts/rgwithtags.ps1",
+                                "Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+                                "ScriptArguments": "-owner $(owner) -environment $(environment) -program $(program) -project $(project) -purpose $(purpose) -team $(team) -resourceGroupName $(resourceGroup) -resourceGroupLocation $(location)",
+                                "errorActionPreference": "stop",
+                                "FailOnStandardError": "false",
+                                "TargetAzurePs": "LatestVersion",
+                                "CustomTargetAzurePs": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+                            "version": "3.*",
+                            "name": "Create Artifact Storage Account",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "--AZUREENDPOINTID--",
+                                "ScriptType": "FilePath",
+                                "ScriptPath": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/drop/scripts/artifactstorage.ps1",
+                                "Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+                                "ScriptArguments": "-storageAccount $(artifactStorage) -resourceGroupName $(resourceGroup) -resourceGroupLocation $(location)  -containerName $(containerName)",
+                                "errorActionPreference": "stop",
+                                "FailOnStandardError": "false",
+                                "TargetAzurePs": "LatestVersion",
+                                "CustomTargetAzurePs": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "eb72cb01-a7e5-427b-a8a1-1b31ccac8a43",
+                            "version": "1.*",
+                            "name": "AzureBlob File Copy",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "SourcePath": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/drop/sh360.publicweb/iac/ARM",
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "--AZUREENDPOINTID--",
+                                "Destination": "AzureBlob",
+                                "StorageAccount": "",
+                                "StorageAccountRM": "$(artifactStorage)",
+                                "ContainerName": "$(containerName)",
+                                "BlobPrefix": "",
+                                "EnvironmentName": "",
+                                "EnvironmentNameRM": "",
+                                "ResourceFilteringMethod": "machineNames",
+                                "MachineNames": "",
+                                "vmsAdminUserName": "",
+                                "vmsAdminPassword": "",
+                                "TargetPath": "",
+                                "AdditionalArguments": "",
+                                "enableCopyPrerequisites": "false",
+                                "CopyFilesInParallel": "true",
+                                "CleanTargetBeforeCopy": "false",
+                                "skipCACheck": "true",
+                                "outputStorageUri": "artifactsLocation",
+                                "outputStorageContainerSasToken": "artifactsLocationSasToken"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "94a74903-f93f-4075-884f-dc11f34058b4",
+                            "version": "2.*",
+                            "name": "Azure Deployment:Create Or Update Resource Group to Create SonarQube",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceName": "--AZUREENDPOINTID--",
+                                "action": "Create Or Update Resource Group",
+                                "resourceGroupName": "$(rgForCommonService)",
+                                "location": "$(location)",
+                                "templateLocation": "Linked artifact",
+                                "csmFileLink": "",
+                                "csmParametersFileLink": "",
+                                "csmFile": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/drop/sh360.publicweb/iac/ARM/MEP-SonarQube.json",
+                                "csmParametersFile": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/drop/sh360.publicweb/iac/ARM/MEP-Azure.parameters.json",
+                                "overrideParameters": "-sites_mepcasa_name $(siteName) -serverfarms_mepcasq_name $(hostingPlanName)",
+                                "deploymentMode": "Incremental",
+                                "enableDeploymentPrerequisites": "None",
+                                "deploymentGroupEndpoint": "",
+                                "project": "",
+                                "deploymentGroupName": "",
+                                "copyAzureVMTags": "true",
+                                "runAgentServiceAsUser": "false",
+                                "userName": "",
+                                "password": "",
+                                "outputVariable": "",
+                                "deploymentName": "",
+                                "deploymentOutputs": "",
+                                "addSpnToEnvironment": "false"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+                            "version": "3.*",
+                            "name": "Delete Artifact Storage",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "--AZUREENDPOINTID--",
+                                "ScriptType": "InlineScript",
+                                "ScriptPath": "",
+                                "Inline": "\nRemove-AzureRmStorageAccount -ResourceGroupName $(resourceGroup) -AccountName $(artifactStorage) -Force",
+                                "ScriptArguments": "",
+                                "errorActionPreference": "stop",
+                                "FailOnStandardError": "false",
+                                "TargetAzurePs": "LatestVersion",
+                                "CustomTargetAzurePs": ""
+                            }
+                        },
+                        {
+                            "environment": {
+                                "sqServerUrl": "$(program)$(project)sq"
+                            },
+                            "taskId": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+                            "version": "2.*",
+                            "name": "Configure SonarQube Server",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "targetType": "inline",
+                                "filePath": "",
+                                "arguments": "",
+                                "script": "$sqURL = \"https://$(siteName).azurewebsites.net\"\n#$sqURL = \"rtz031sh360sq.azurewebsites.net\"\n$userName = \"admin\"\n$password = \"admin\"\n$sonarqubeTokenName = \"SmartHotel360-PublicWeb\"\n$sonarqubeProjectKey = \"SmartHotel360-PublicWeb\"\n$sonarqubeProjectName = \"SmartHotel360-PublicWeb\"\n$sonarqubeEndpoint\n$status\n\n\nwhile ($status -ne 200) { \n    try {\n        $result = Invoke-WebRequest -Uri $sqURL -TimeoutSec 30\n        $status = $result.StatusCode\n        Write-Host (\"StatusCode: $status\")\n        if ($status -eq 200) {\n            $result.Dispose()\n            Write-Host (\"SonarQube Server is ready.\")\n        \n        } \n    }\n    catch {\n        $_.Exception.Message\n        Write-Host (\"Retrying...\")\n    }\n    Start-Sleep -Seconds 30\n}\n\n\n# Authentication Sonarqube\n$authInfo = (\"{0}:{1}\" -f $username, $password)\n$authInfo = [System.Text.Encoding]::ASCII.GetBytes($authInfo)\n$authInfo = [System.Convert]::ToBase64String($authInfo)\n$authHeader = @{Authorization = (\"Basic {0}\" -f $authInfo)}\n\n\n$pingApiUrl = $sqUrl + \"/api/system/ping\"\n\n$pingApiResponse\n\nwhile ($pingApiResponse -ne \"pong\") {\n\n    try {\n        $pingApiResponse = Invoke-RestMethod -Uri $pingApiUrl -Headers $authHeader -Method GET -TimeoutSec 30\n        if ($pingApiResponse -eq \"pong\")\n        {\n            Write-Host (\"SonarQube APIs are ready.\")\n        }\n    }\n    catch {\n        $exception = $_.Exception\n        $exception\n\n        Write-Host \"StatusCode:\" $_.Exception.Response.StatusCode.value__ \n    }\n    Start-Sleep -Seconds 30\n}\n\n# Generate SonarQube security token\n$SqTokenApiUrl = $sqURL + \"/api/user_tokens/generate?name=$sonarqubeTokenName\"\n$sqTokenResponse = Invoke-RestMethod -Uri $SqTokenApiUrl -Headers $authHeader -Method POST -ContentType 'application/x-www-form-urlencoded'\n$sqToken = $sqTokenResponse.token\nWrite-Host \"##vso[task.setvariable variable=sqToken;]$sqToken\"\n\n\n# Create new SonarQube project\n$createSqProjApiUrl = $sqURL + \"/api/projects/create?project=$sonarqubeProjectName&name=$sonarqubeProjectKey\"\n$sqProject = Invoke-RestMethod -Uri $createSqProjApiUrl -Headers $authHeader -Method POST -ContentType 'application/x-www-form-urlencoded'\n$sqProjectKey = $sqProject.project.key\nWrite-Host \"##vso[task.setvariable variable=sqProjectKey;]$sqProjectKey\"\n\n\n# Create Sonar Exclusions\n$uriSourceFileExclusion = $sqURL + \"/api/settings/set?component=$sonarqubeProjectName&key=sonar.exclusions&values=**/dist/*.js&values=**/**/*.js\"\nInvoke-RestMethod -Uri $uriSourceFileExclusion  -Headers $authHeader -Method Post -ContentType 'application/x-www-form-urlencoded'\n",
+                                "errorActionPreference": "stop",
+                                "failOnStderr": "false",
+                                "ignoreLASTEXITCODE": "false",
+                                "pwsh": "false",
+                                "workingDirectory": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+                            "version": "2.*",
+                            "name": "Update SonarQube Endpoint",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "targetType": "inline",
+                                "filePath": "",
+                                "arguments": "",
+                                "script": "Write-Host \"SQ Token: $($env:sqToken)\"\nWrite-Host \"Project Key: $($env:sqProjectKey)\"\n\n$Org = \"$(AzDoOrg)\"\n$Project = \"$(AzDoProject)\"\n$SqEndpointName = \"SQ-SmartHotel360.PublicWeb\"\n$SqUrl = \"https://$(siteName).azurewebsites.net\"\n$SqToken = \"$($env:sqToken)\"\n$PAT = \"$(AzDoPAT)\"\n$Oauth = \"$(AzDoOauth)\"\n\nif ([string]::IsNullOrEmpty($Oauth)) {\n    $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(\":$($PAT)\"))\n    $authHeader = @{Authorization = 'Basic ' + $base64AuthInfo}\n}\nelseif ([string]::IsNullOrEmpty($PAT)) {\n    $authHeader = @{Authorization = 'Bearer ' + $Oauth}\n}\n\n$body = '{\n                \"data\" : {\n                    },\n\n                    \"name\": \"--Sonarqube_Endpoint_Name--\",\n                    \"type\": \"sonarqube\",\n                    \"url\": \"--Sonarqube_Url--\",\n                    \"authorization\": {\n                        \"scheme\": \"UsernamePassword\",\n                        \"parameters\": {\n                            \"username\": \"--Sonarqube_Token--\",\n                            \"password\": \"\"\n                        }\n                    }\n                }'\n\n#Replacing values\n$body = $body.Replace(\"--Sonarqube_Endpoint_Name--\", $SqEndpointName)\n$body = $body.Replace(\"--Sonarqube_Url--\", $SqUrl)\n$body = $body.Replace(\"--Sonarqube_Token--\", $SqToken)\n\n#Get Endpoint Id\n$EndpointApi = \"https://dev.azure.com/$Org/$Project/_apis/serviceendpoint/endpoints?endpointNames=$SqEndpointName&api-version=5.0-preview.2\"\n$Endpoint = Invoke-RestMethod -Method Get -Uri $EndpointApi -Headers $authHeader -ErrorAction Stop\n$EndpointId = $Endpoint.value[0].id\n\n#Update Endpoint\n$ApiUrl = \"https://dev.azure.com/$Org/$Project/_apis/serviceendpoint/endpoints/\" + $EndpointId + \"?api-version=4.1-preview.1\"\n$response = Invoke-RestMethod -Uri $ApiUrl -headers $authHeader -Body $body -ContentType 'application/json'-Method Put -ErrorAction Stop\n$response\n\n\n",
+                                "errorActionPreference": "stop",
+                                "failOnStderr": "false",
+                                "ignoreLASTEXITCODE": "false",
+                                "pwsh": "false",
+                                "workingDirectory": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": true,
+                "badgeEnabled": false,
+                "autoLinkWorkItems": false,
+                "pullRequestDeploymentEnabled": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "ReleaseStarted",
+                    "conditionType": 1,
+                    "value": ""
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 1,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 9,
+                "url": "",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {},
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [],
+            "badgeUrl": ""
+        },
+        {
+            "id": 2,
+            "name": "SH360_Web",
+            "rank": 2,
+            "owner": {
+                "displayName": null,
+                "id": "b7859da1-d0a9-42d3-bff1-9574bfa8db50"
+            },
+            "variables": {
+                "appServiceKind": {
+                    "value": "app"
+                },
+                "artifactStorage": {
+                    "value": "$(program)$(project)devartstr"
+                },
+                "hostingPlanName": {
+                    "value": "\"$(program)-$(project)-dev-appservice\""
+                },
+                "siteName": {
+                    "value": "$(program)$(project)$(environment)"
+                }
+            },
+            "variableGroups": [],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 2
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": 1
+                }
+            },
+            "deployStep": {
+                "id": 3
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 6
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": 2
+                }
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": 0
+                        },
+                        "agentSpecification": null,
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": [
+                                {
+                                    "alias": "_--BUILDDEFINITIONNAME--",
+                                    "artifactType": "Build",
+                                    "artifactDownloadMode": "All",
+                                    "artifactItems": []
+                                }
+                            ]
+                        },
+                        "queueId": "--QUEUEID--",
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": 1,
+                    "name": "Agent job",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+                            "version": "3.*",
+                            "name": "Create RG with Tags",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "--AZUREENDPOINTID--",
+                                "ScriptType": "FilePath",
+                                "ScriptPath": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/drop/scripts/rgwithtags.ps1",
+                                "Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+                                "ScriptArguments": "-owner $(owner) -environment $(environment) -program $(program) -project $(project) -purpose $(purpose) -team $(team) -resourceGroupName $(resourceGroup) -resourceGroupLocation $(location)",
+                                "errorActionPreference": "stop",
+                                "FailOnStandardError": "false",
+                                "TargetAzurePs": "LatestVersion",
+                                "CustomTargetAzurePs": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+                            "version": "3.*",
+                            "name": "Create Artifact Storage Account",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "--AZUREENDPOINTID--",
+                                "ScriptType": "FilePath",
+                                "ScriptPath": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/drop/scripts/artifactstorage.ps1",
+                                "Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+                                "ScriptArguments": "-storageAccount $(artifactStorage) -resourceGroupName $(resourceGroup) -resourceGroupLocation $(location)  -containerName $(containerName)",
+                                "errorActionPreference": "stop",
+                                "FailOnStandardError": "false",
+                                "TargetAzurePs": "LatestVersion",
+                                "CustomTargetAzurePs": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "eb72cb01-a7e5-427b-a8a1-1b31ccac8a43",
+                            "version": "1.*",
+                            "name": "AzureBlob File Copy",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "SourcePath": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/drop/sh360.publicweb/iac/ARM",
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "--AZUREENDPOINTID--",
+                                "Destination": "AzureBlob",
+                                "StorageAccount": "",
+                                "StorageAccountRM": "$(artifactStorage)",
+                                "ContainerName": "$(containerName)",
+                                "BlobPrefix": "",
+                                "EnvironmentName": "",
+                                "EnvironmentNameRM": "",
+                                "ResourceFilteringMethod": "machineNames",
+                                "MachineNames": "",
+                                "vmsAdminUserName": "",
+                                "vmsAdminPassword": "",
+                                "TargetPath": "",
+                                "AdditionalArguments": "",
+                                "enableCopyPrerequisites": "false",
+                                "CopyFilesInParallel": "true",
+                                "CleanTargetBeforeCopy": "false",
+                                "skipCACheck": "true",
+                                "outputStorageUri": "artifactsLocation",
+                                "outputStorageContainerSasToken": "artifactsLocationSasToken"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "94a74903-f93f-4075-884f-dc11f34058b4",
+                            "version": "2.*",
+                            "name": "Azure Deployment:Create Or Update Resource Group action  to Create SH360 WebApp",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceName": "--AZUREENDPOINTID--",
+                                "action": "Create Or Update Resource Group",
+                                "resourceGroupName": "$(resourceGroup)",
+                                "location": "$(location)",
+                                "templateLocation": "Linked artifact",
+                                "csmFileLink": "",
+                                "csmParametersFileLink": "",
+                                "csmFile": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/drop/sh360.publicweb/iac/ARM/MEP-SH360-Service.json",
+                                "csmParametersFile": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/drop/sh360.publicweb/iac/ARM/MEP-Azure.parameters.json",
+                                "overrideParameters": " -_artifactsLocation $(artifactsLocation) -_artifactsLocationSasToken $(artifactsLocationSasToken)  -owner $(owner) -environment $(environment) -program $(program) -project $(project) -purpose $(purpose) -team $(team) -hostingPlanName $(hostingPlanName) -siteName $(siteName) -appServiceKind $(appServiceKind) -appInsightsName $(appInsightsName) -webAppSKU \"S1\"",
+                                "deploymentMode": "Incremental",
+                                "enableDeploymentPrerequisites": "None",
+                                "deploymentGroupEndpoint": "",
+                                "project": "",
+                                "deploymentGroupName": "",
+                                "copyAzureVMTags": "true",
+                                "runAgentServiceAsUser": "false",
+                                "userName": "",
+                                "password": "",
+                                "outputVariable": "",
+                                "deploymentName": "",
+                                "deploymentOutputs": "",
+                                "addSpnToEnvironment": "false"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+                            "version": "3.*",
+                            "name": "Delete Artifact Storage",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "--AZUREENDPOINTID--",
+                                "ScriptType": "InlineScript",
+                                "ScriptPath": "",
+                                "Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments\n\nRemove-AzureRmStorageAccount -ResourceGroupName $(resourceGroup) -AccountName $(artifactStorage) -Force",
+                                "ScriptArguments": "",
+                                "errorActionPreference": "stop",
+                                "FailOnStandardError": "false",
+                                "TargetAzurePs": "LatestVersion",
+                                "CustomTargetAzurePs": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "32abcf98-0df6-4711-b2e4-66a405d3c1a6",
+                            "version": "3.*",
+                            "name": "Trigger a new build of --APPBUILDDEFINITIONNAME--",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "definitionIsInCurrentTeamProject": "true",
+                                "tfsServer": "",
+                                "teamProject": "",
+                                "buildDefinition": "--APPBUILDDEFINITIONNAME--",
+                                "queueBuildForUserThatTriggeredBuild": "true",
+                                "ignoreSslCertificateErrors": "false",
+                                "useSameSourceVersion": "false",
+                                "useSameBranch": "true",
+                                "branchToUse": "",
+                                "waitForQueuedBuildsToFinish": "false",
+                                "waitForQueuedBuildsToFinishRefreshTime": "60",
+                                "failTaskIfBuildsNotSuccessful": "true",
+                                "cancelBuildsIfAnyFails": "false",
+                                "treatPartiallySucceededBuildAsSuccessful": "false",
+                                "downloadBuildArtifacts": "false",
+                                "dropDirectory": "$(agent.workFolder)",
+                                "storeInEnvironmentVariable": "false",
+                                "demands": "",
+                                "queueid": "",
+                                "delayBetweenBuilds": "0",
+                                "buildParameters": "",
+                                "authenticationMethod": "Personal Access Token",
+                                "username": "",
+                                "password": "$(azDoToken)",
+                                "enableBuildInQueueCondition": "false",
+                                "includeCurrentBuildDefinition": "true",
+                                "blockingBuildsList": "",
+                                "blockInProgressBuilds": "false",
+                                "dependentOnSuccessfulBuildCondition": "false",
+                                "dependentBuildsList": "",
+                                "dependentOnFailedBuildCondition": "false",
+                                "dependentFailingBuildsList": "",
+                                "checkbuildsoncurrentbranch": "false",
+                                "failTaskIfConditionsAreNotFulfilled": "false"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": true,
+                "badgeEnabled": false,
+                "autoLinkWorkItems": false,
+                "pullRequestDeploymentEnabled": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "SH360_CS",
+                    "conditionType": 2,
+                    "value": "4"
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 1,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 9,
+                "url": "",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {},
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [],
+            "badgeUrl": ""
+        }
+    ],
+    "artifacts": [
+        {
+            "sourceId": "--SOURCEID--",
+            "type": "Build",
+            "alias": "_--BUILDDEFINITIONNAME--",
+            "definitionReference": {
+                "artifactSourceDefinitionUrl": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionBranch": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionSpecific": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionTags": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionType": {
+                    "id": "latestType",
+                    "name": "Latest"
+                },
+                "definition": {
+                    "id": "--BUILDDEFINITIONID--",
+                    "name": "--BUILDDEFINITIONNAME--"
+                },
+                "definitions": {
+                    "id": "",
+                    "name": ""
+                },
+                "IsMultiDefinitionType": {
+                    "id": "False",
+                    "name": "False"
+                },
+                "project": {
+                    "id": "--PROJECTID--",
+                    "name": "Modern Engineering CoE"
+                },
+                "repository": {
+                    "id": "12a758f5-0a48-48f3-864d-13e5f9287fda",
+                    "name": "SH360-accelerator"
+                }
+            },
+            "isPrimary": true,
+            "isRetained": false
+        }
+    ],
+    "triggers": [
+        {
+            "artifactAlias": "_IaC-SmartHotel360.PublicWeb-CI",
+            "triggerConditions": [],
+            "triggerType": 1
+        }
+    ],
+    "releaseNameFormat": "Release-$(rev:r)",
+    "tags": [],
+    "properties": {
+        "DefinitionCreationSource": {
+            "$type": "System.String",
+            "$value": "ReleaseClone"
+        },
+        "IntegrateJiraWorkItems": {
+            "$type": "System.String",
+            "$value": "false"
+        }
+    },
+    "id": "",
+    "name": "--RELEASEDEFINITIONNAME--",
+    "path": "\\",
+    "projectReference": null,
+    "url": "",
+    "_links": {
+        "self": {
+            "href": ""
+        },
+        "web": {
+            "href": ""
+        }
+    }
+}

@@ -1,0 +1,170 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "_artifactsLocation": {
+            "type": "string",
+            "metadata":{"description":"Do not modify"}
+        },
+        "_artifactsLocationSasToken": {
+            "type": "securestring",
+            "metadata":{"description":"Do not modify"}
+        }, 
+        "owner": {
+            "type": "string",
+            "defaultValue": "Yno",
+            "metadata":{"description":"Owner of the ResourceGroup/ Subscription"}
+        },
+        "team": {
+            "type": "string",
+            "defaultValue": "Innovation",
+            "metadata":{"description":"Team Name"}
+        },
+        "environment": {
+            "type": "string",
+            "defaultValue": "dev",
+            "metadata":{"description":"Environment"}
+        },
+        "program": {
+            "type": "string",
+            "defaultValue": "mep",
+            "metadata":{"description":"Name of the Program"}
+        },
+        "project": {
+            "type": "string",
+            "defaultValue": "adepsq",
+            "metadata":{"description":"Name of the Project"}
+        },
+        "purpose":  {
+            "type": "string",
+            "defaultValue": "adep",
+            "metadata":{"description":"Purpose of the Deployment"}
+        },
+        "appInsightsName":{
+            "type": "string",
+            "metadata": {
+                "description":"App Insights Name"
+            }
+        } ,
+        "hostingPlanName":{
+            "type": "string",
+            "metadata": {
+                "description":"App Service Hosting Plan Name"
+            }
+        },
+        "siteName":{
+          "type": "string",
+          "metadata": {
+              "description":"App Service Hosting Plan Name"
+          }
+      },
+      "appInsightsIK":{
+        "type": "string",
+        "metadata": {
+            "description":"APPINSIGHTS_INSTRUMENTATIONKEY"
+        }
+    },
+    "slotName":{
+        "type": "string",
+        "defaultValue": "dev",
+        "metadata": {
+            "description":"Website Slot name"
+        }
+    }       
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2016-03-01",
+            "name": "[parameters('siteName')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [    
+            ],
+            "kind": "app",
+            "tags": {
+              "Owner": "[parameters('owner')]",
+              "Team": "[parameters('team')]",
+              "Environment": "[parameters('environment')]",
+              "Purpose": "[parameters('purpose')]"
+          },
+            "properties": {
+                "name": "[parameters('siteName')]",
+                "siteConfig": {
+                    "appSettings": [                    
+                    ]
+                },
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+            },
+            "resources": [
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "Microsoft.ApplicationInsights.AzureWebSites",
+                    "type": "siteextensions",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/Sites', parameters('sitename'))]"
+                    ],
+                    "properties": {
+                    }
+                },
+                      {
+                          "apiVersion": "2015-08-01",
+                          "name": "appsettings",
+                          "type": "config",
+                          "dependsOn": [     
+                            "[resourceId('Microsoft.Web/Sites', parameters('sitename'))]",
+                            "Microsoft.ApplicationInsights.AzureWebSites"                        
+                          ],
+                          "properties": {
+                              "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsIK')]"
+                          }
+                      }
+                      
+                  ]
+          },
+          {
+            "apiVersion": "2016-08-01",
+            "type": "Microsoft.Web/sites/slots",
+            "name": "[concat(parameters('siteName'), '/',parameters('slotName'))]",
+            "kind": "app",
+             "dependsOn": ["[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"],     
+            "location": "[resourceGroup().location]",
+            "comments": "This specifies the web app slots.",
+            "tags": {
+                "Owner": "[parameters('owner')]",
+                "Team": "[parameters('team')]",
+                "Environment": "[parameters('environment')]",
+                "Purpose": "[parameters('purpose')]"
+            },
+            "properties": {
+              "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+            },
+             "resources": [
+                      {
+                          "apiVersion": "2015-08-01",
+                          "name": "appsettings",
+                          "type": "config",
+                          "dependsOn": [
+                             "[resourceId('Microsoft.Web/sites/slots', parameters('siteName'), parameters('slotName'))]",
+                              "Microsoft.ApplicationInsights.AzureWebSites"
+                          ],
+                          "properties": {
+                              "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsIK')]"
+                          }
+                      },
+                      {
+                          "apiVersion": "2015-08-01",
+                          "name": "Microsoft.ApplicationInsights.AzureWebSites",
+                          "type": "siteextensions",
+                          "dependsOn": [
+                              "[resourceId('Microsoft.Web/sites/slots', parameters('siteName'), parameters('slotName'))]"
+                          ],
+                          "properties": {
+                          }
+                      }
+                  ]    
+          }
+          
+    ],
+    "outputs": {}
+}

@@ -1,0 +1,415 @@
+{
+    "ProjectName": "SmartHotel360",
+    "ProjectDescription": "A project containing SmartHotel 360 suite of apps (web, mobile, webapi)",
+    "ProjectType": "Showcase",
+    "RepositoryName": "SmartHotel360",
+    "Cost": 0,
+    "RunTimeCost": 5,
+    "README": "https://innersource.visualstudio.com/Modern%20Engineering%20CoE/_git/SH360-accelerator.temp?path=%2Fdocuments%2Findex.md&version=GBmaster&_a=preview",
+    "Icon": "",
+    "ExportCompliance": false,
+    "ContributionAllowed": true,
+    "tags": [
+        ".NET Core 360",
+        "Azure SQL",
+        "SonarQube"
+    ],
+    "preconditions": [],
+    "inclusions": {
+        "Continuous Integration": {
+            "Automated Build": true,
+            "Unit Testing": true
+        },
+        "Continuous Deployment": {
+            "Automated Deployment": true
+        },
+        "Project Management": {
+            "Work Items": true,
+            "Queries": true,
+            "Dashboard": true
+        }
+    },
+    "ThirdPartyTools": [
+        "Selenium",
+        "SonarQube"
+    ],
+    "parameters": [
+        {
+            "SubscriptionId": {
+                "type": "hidden",
+                "defaultValue": "key"
+            },
+            "SubscriptionName": {
+                "type": "hidden",
+                "defaultValue": "Visual Studio Enterprise"
+            },
+            "TenantId": {
+                "type": "hidden",
+                "defaultValue": "key"
+            },
+            "TriggerBuild": {
+                "type": "dropdown",
+                "dropDownItems": [
+                    "true",
+                    "false"
+                ],
+                "defaultValue": "false"
+            }
+        }
+    ],
+    "components": [
+        {
+            "name": "SmartHotel360.PublicWeb",
+            "type": "webapp",
+            "workdir": "src/SmartHotel360.PublicWeb",
+            "extensions": [
+                {
+                    "PublisherName": "SonarSource",
+                    "PublisherId": "SonarSource",
+                    "ExtensionName": "SonarQube",
+                    "ExtensionId": "sonarqube"
+                },
+                {
+                    "PublisherName": "Benj Huser",
+                    "PublisherId": "benjhuser",
+                    "ExtensionName" : "Trigger Build Task",                  
+                    "ExtensionId": "tfs-extensions-build-tasks"
+                }
+            ],
+            "endpoints": [
+                {
+                    "name": "ARM-SmartHotel360.PublicWeb",
+                    "type": "arm",
+                    "config": [
+                        {
+                            "name": "TenantId",
+                            "value": "parameter(TenantId)",
+                            "source": "keyvault"
+                        },
+                        {
+                            "name": "SubscriptionId",
+                            "value": "parameter(SubscriptionId)",
+                            "source": "keyvault"
+                        },
+                        {
+                            "name": "SubscriptionName",
+                            "value": "parameter(SubscriptionName)",
+                            "source": "keyvault"
+                        }
+                    ]
+                },
+                {
+                    "name": "SQ-SmartHotel360.PublicWeb",
+                    "type": "sonarqube",
+                    "config": [
+                        {
+                            "name": "SqUrl",
+                            "value": "http://valSqUrl",
+                            "source": "manifest"
+                        },
+                        {
+                            "name": "SqToken",
+                            "value": "valSqToken",
+                            "source": "manifest"
+                        },
+                        {
+                            "name": "SqProjectName",
+                            "value": "valSqProjectName",
+                            "source": "manifest"
+                        },
+                        {
+                            "name": "SqProjectKey",
+                            "value": "valSqProjectKey",
+                            "source": "manifest"
+                        }
+                    ]
+                }
+            ],
+            "pipelines": {
+                "build": [
+                    {
+                        "name": "IaC-SmartHotel360.PublicWeb-CI",
+                        "type": "iac",
+                        "template": "/orchestration/build/IaC-SmartHotel360.PublicWeb-CI.json",
+                        "config": [
+                            {
+                                "name": "PROJECTID",
+                                "value": "placeholder",
+                                "source": "function(GetProjectId)"
+                            },
+                            {
+                                "name": "QUEUEID",
+                                "value": "Hosted Windows 2019 with VS2019",
+                                "source": "function(GetBuildAgentQueue)"
+                            },
+                            {
+                                "name": "REPOSITORYNAME",
+                                "value": "SmartHotel360",
+                                "source": "manifest"
+                            },
+                            {
+                                "name": "AZDOPROJECT",
+                                "value": "placeholder",
+                                "source": "web(Project)"
+                            },
+                            {
+                                "name": "AZDOORG",
+                                "value": "placeholder",
+                                "source": "web(Org)"
+                            },
+                            {
+                                "name": "AZDOPAT",
+                                "value": "placeholder",
+                                "source": "web(PAT)"
+                            },
+                            {
+                                "name": "AZDOOAUTH",
+                                "value": "placeholder",
+                                "source": "web(Oauth)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "App-SmartHotel360.PublicWeb-CI",
+                        "type": "app",
+                        "template": "/orchestration/build/App-SmartHotel360.PublicWeb-CI.json",
+                        "config": [
+                            {
+                                "name": "PROJECTID",
+                                "value": "placeholder",
+                                "source": "function(GetProjectId)"
+                            },
+                            {
+                                "name": "QUEUEID",
+                                "value": "Hosted Windows 2019 with VS2019",
+                                "source": "function(GetBuildAgentQueue)"
+                            },
+                            {
+                                "name": "REPOSITORYNAME",
+                                "value": "SmartHotel360",
+                                "source": "manifest"
+                            },
+                            {
+                                "name": "SQENDPOINTNAME",
+                                "value": "SQ-SmartHotel360.PublicWeb",
+                                "source": "manifest"
+                            },
+                            {
+                                "name": "SQENDPOINTID",
+                                "value": "placeholder",
+                                "source": "function(GetSonarqubeEndpointId)"
+                            }
+                        ]
+                    }
+                ],
+                "release": [
+                    {
+                        "name": "IaC-SmartHotel360.PublicWeb-CD",
+                        "type": "iac",
+                        "template": "/orchestration/release/IaC-SmartHotel360.PublicWeb-CD.json",
+                        "config": [
+                            {
+                                "name": "PROJECT",
+                                "value": "sh360",
+                                "source": "value"
+                            },
+                            {
+                                "name": "PROGRAM",
+                                "value": "parameter(Program)",
+                                "source": "value"
+                            },
+                            {
+                                "name": "PURPOSE",
+                                "value": "Asset Development",
+                                "source": "value"
+                            },
+                            {
+                                "name": "LOCATION",
+                                "value": "westeurope",
+                                "source": "value"
+                            },
+                            {
+                                "name": "SQLSERVERPWD",
+                                "value": "P@ssw0rd!1234",
+                                "source": "value"
+                            },
+                            {
+                                "name": "PROJECTID",
+                                "value": "placeholder",
+                                "source": "function(GetProjectId)"
+                            },
+                            {
+                                "name": "SOURCEID",
+                                "value": "placeholder",
+                                "source": "function(GetSourceId)"
+                            },
+                            {
+                                "name": "QUEUEID",
+                                "value": "Hosted Windows 2019 with VS2019",
+                                "source": "function(GetBuildAgentQueue)"
+                            },
+                            {
+                                "name": "BUILDDEFINITIONID",
+                                "value": "placeholder",
+                                "source": "function(GetBuildDefinitionId)"
+                            },
+                            {
+                                "name": "BUILDDEFINITIONNAME",
+                                "value": "IaC-SmartHotel360.PublicWeb-CI",
+                                "source": "value"
+                            },
+                            {
+                                "name": "APPBUILDDEFINITIONNAME",
+                                "value": "App-SmartHotel360.PublicWeb-CI",
+                                "source": "value"
+                            },
+                            {
+                                "name": "AZUREENDPOINTID",
+                                "value": "placeholder",
+                                "source": "function(GetAzureEndpointId)"
+                            },
+                            {
+                                "name": "AZENDPOINTNAME",
+                                "value": "ARM-SmartHotel360.PublicWeb",
+                                "source": "manifest"
+                            },
+                            {
+                                "name": "REPOSITORYNAME",
+                                "value": "SmartHotel360",
+                                "source": "value"
+                            },
+                            {
+                                "name": "AZDOPROJECT",
+                                "value": "placeholder",
+                                "source": "web(Project)"
+                            },
+                            {
+                                "name": "AZDOORG",
+                                "value": "placeholder",
+                                "source": "web(Org)"
+                            },
+                            {
+                                "name": "AZDOPAT",
+                                "value": "placeholder",
+                                "source": "web(PAT)"
+                            },
+                            {
+                                "name": "AZDOOAUTH",
+                                "value": "placeholder",
+                                "source": "web(Oauth)"
+                            },
+                            {
+                                "name": "AZDOTOKEN",
+                                "value": "placeholder",
+                                "source": "function(GetTokenUsed)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "App-SmartHotel360.PublicWeb-CD",
+                        "type": "app",
+                        "template": "/orchestration/release/App-SmartHotel360.PublicWeb-CD.json",
+                        "config": [
+                            {
+                                "name": "PROJECT",
+                                "value": "sh360",
+                                "source": "value"
+                            },
+                            {
+                                "name": "PROGRAM",
+                                "value": "parameter(Program)",
+                                "source": "value"
+                            },
+                            {
+                                "name": "SLOT",
+                                "value": "dev",
+                                "source": "value"
+                            },
+                            {
+                                "name": "PURPOSE",
+                                "value": "Asset Development",
+                                "source": "value"
+                            },
+                            {
+                                "name": "LOCATION",
+                                "value": "westeurope",
+                                "source": "value"
+                            },
+                            {
+                                "name": "SQLSERVERPWD",
+                                "value": "P@ssw0rd!1234",
+                                "source": "value"
+                            },
+                            {
+                                "name": "PROJECTID",
+                                "value": "placeholder",
+                                "source": "function(GetProjectId)"
+                            },
+                            {
+                                "name": "SOURCEID",
+                                "value": "placeholder",
+                                "source": "function(GetSourceId)"
+                            },
+                            {
+                                "name": "QUEUEID",
+                                "value": "Hosted Windows 2019 with VS2019",
+                                "source": "function(GetBuildAgentQueue)"
+                            },
+                            {
+                                "name": "BUILDDEFINITIONID",
+                                "value": "placeholder",
+                                "source": "function(GetBuildDefinitionId)"
+                            },
+                            {
+                                "name": "BUILDDEFINITIONNAME",
+                                "value": "App-SmartHotel360.PublicWeb-CI",
+                                "source": "value"
+                            },
+                            {
+                                "name": "AZUREENDPOINTID",
+                                "value": "placeholder",
+                                "source": "function(GetAzureEndpointId)"
+                            },
+                            {
+                                "name": "AZENDPOINTNAME",
+                                "value": "ARM-SmartHotel360.PublicWeb",
+                                "source": "manifest"
+                            },
+                            {
+                                "name": "REPOSITORYNAME",
+                                "value": "SmartHotel360",
+                                "source": "value"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "workitems": [
+                {
+                    "name": "Product Backlog Item",
+                    "template": "workitems/PBIfromTemplate.json"
+                },
+                {
+                    "name": "Task",
+                    "template": "workitems/TaskfromTemplate.json"
+                },
+                {
+                    "name": "Test Case",
+                    "template": "workitems/TestCasefromTemplate.json"
+                },
+                {
+                    "name": "Bug",
+                    "template": "workitems/BugfromTemplate.json"
+                },
+                {
+                    "name": "Epic",
+                    "template": "workitems/EpicfromTemplate.json"
+                },
+                {
+                    "name": "Feature",
+                    "template": "workitems/FeaturefromTemplate.json"
+                }
+            ]
+        }
+    ]
+}

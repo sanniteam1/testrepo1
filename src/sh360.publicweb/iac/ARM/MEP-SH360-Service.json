@@ -1,0 +1,186 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "_artifactsLocation": {
+          "type": "string",
+          "metadata":{"description":"Do not modify"}
+      },
+      "_artifactsLocationSasToken": {
+          "type": "securestring",
+          "metadata":{"description":"Do not modify"}
+      }, 
+      "owner": {
+          "type": "string",
+          "defaultValue": "Yno",
+          "metadata":{"description":"Owner of the ResourceGroup/ Subscription"}
+      },
+      "team": {
+          "type": "string",
+          "defaultValue": "Innovation",
+          "metadata":{"description":"Team Name"}
+      },
+      "environment": {
+          "type": "string",
+          "defaultValue": "dev",
+          "metadata":{"description":"Environment"}
+      },
+      "program": {
+          "type": "string",
+          "defaultValue": "mep",
+          "metadata":{"description":"Name of the Program"}
+      },
+      "project": {
+          "type": "string",
+          "defaultValue": "adepsq",
+          "metadata":{"description":"Name of the Project"}
+      },
+      "purpose":  {
+          "type": "string",
+          "defaultValue": "adep",
+          "metadata":{"description":"Purpose of the Deployment"}
+      },
+      "hostingPlanName":{
+        "type": "string",
+        "metadata": {
+            "description":"App Service Hosting Plan Name"
+        }
+    },
+    "siteName":{
+      "type": "string",
+      "metadata": {
+          "description":"App Service Hosting Plan Name"
+      }
+  },
+  "appInsightsName":{
+    "type": "string",
+    "metadata": {
+        "description":"App Service Hosting Plan Name"
+    }
+},
+    "appServiceKind":{
+      "type": "string",
+      "allowedValues": [
+        "app",
+        "linux"
+      ],
+      "metadata": {
+          "description":"App Service Kind"
+      }
+  },
+      "webAppSKU":{
+        "type": "string",
+          "allowedValues": [
+            "F1",
+            "D1",
+            "B1",
+            "B2",
+            "B3",
+            "S1",
+            "S2",
+            "S3",
+            "P1",
+            "P2",
+            "P3",
+            "P4"
+          ],
+    "defaultValue": "B1",
+    "metadata": {
+      "description": "The pricing tier for the hosting plan."
+        }
+      }      
+    },
+    "variables": {
+        "comments":"Copyrights @ AMEP",
+        "config_web_name":"web",   
+        "templateURI":{
+            "templateLocation":".",
+            "storageTemplate":"MEP-AzureStorageV2.json",
+            "appInsightsTemplate":"MEP-Azure-AppInsights.json",
+            "sqlServerTemplate":"MEP-AzureSQL.json",
+            "sqWebTemplate":"MEP-SQ-WebAppContainer.json",
+            "appServicePlan":"MEP-Azure-AppService-App.json",
+            "webAppTemplate":"MEP-Azure-WebApps.json"             
+        }
+     },
+    "resources": [    
+          {
+            "type": "Microsoft.Resources/deployments",
+            "name": "AzureAppServicePlan-Deployment",          
+            "dependsOn": [],
+            "apiVersion": "2015-01-01",           
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {      
+                "uri": "[concat(parameters('_artifactsLocation'),'/',variables('templateURI').templateLocation,'/',variables('templateURI').appServicePlan,parameters('_artifactsLocationSasToken'))]",
+                "contentVersion": "1.0.0.0"
+              },
+              "parameters": {
+                "_artifactsLocation": { "value": "[parameters('_artifactsLocation')]" },
+                "_artifactsLocationSasToken": { "value": "[parameters('_artifactsLocationSasToken')]" },
+                "owner": { "value": "[parameters('owner')]" },
+                "team": { "value": "[parameters('team')]" },
+                "environment": { "value": "[parameters('environment')]" },
+                "program": { "value": "[parameters('program')]" },
+                "project": { "value": "[parameters('project')]" },
+                "purpose": { "value": "[parameters('purpose')]" },
+                "hostingPlanName": { "value": "[parameters('hostingPlanName')]" },
+                "webAppSKU":{"value": "[parameters('webAppSKU')]"},
+                "appServiceKind":{"value": "[parameters('appServiceKind')]"}           
+              }
+            }
+          },
+          {
+            "type": "Microsoft.Resources/deployments",
+            "name": "AzureAppInsight-Deployment",
+            "dependsOn": [],
+            "apiVersion": "2017-05-10",                         
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {      
+                "uri": "[concat(parameters('_artifactsLocation'),'/',variables('templateURI').templateLocation,'/',variables('templateURI').appInsightsTemplate,parameters('_artifactsLocationSasToken'))]",
+                "contentVersion": "1.0.0.0"
+              },
+              "parameters": {
+                "_artifactsLocation": { "value": "[parameters('_artifactsLocation')]" },
+                "_artifactsLocationSasToken": { "value": "[parameters('_artifactsLocationSasToken')]" },
+                "owner": { "value": "[parameters('owner')]" },
+                "team": { "value": "[parameters('team')]" },
+                "environment": { "value": "[parameters('environment')]" },
+                "program": { "value": "[parameters('program')]" },
+                "project": { "value": "[parameters('project')]" },
+                "purpose": { "value": "[parameters('purpose')]" },                           
+                "appInsightsName":{"value": "[parameters('appInsightsName')]"}
+              }
+            }
+          },
+          {
+            "type": "Microsoft.Resources/deployments",
+            "name": "AzureWebApps-Deployment",
+            "dependsOn": [],
+            "apiVersion": "2017-05-10",                      
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {      
+                "uri": "[concat(parameters('_artifactsLocation'),'/',variables('templateURI').templateLocation,'/',variables('templateURI').webAppTemplate,parameters('_artifactsLocationSasToken'))]",
+                "contentVersion": "1.0.0.0"
+              },
+              "parameters": {
+                "_artifactsLocation": { "value": "[parameters('_artifactsLocation')]" },
+                "_artifactsLocationSasToken": { "value": "[parameters('_artifactsLocationSasToken')]" },
+                "owner": { "value": "[parameters('owner')]" },
+                "team": { "value": "[parameters('team')]" },
+                "environment": { "value": "[parameters('environment')]" },
+                "program": { "value": "[parameters('program')]" },
+                "project": { "value": "[parameters('project')]" },
+                "purpose": { "value": "[parameters('purpose')]" },                           
+                "appInsightsName":{"value": "[parameters('appInsightsName')]"},
+                "hostingPlanName": { "value": "[parameters('hostingPlanName')]" },
+                "siteName": { "value": "[parameters('siteName')]" },            
+                "appInsightsIK":{"value":"[reference('AzureAppInsight-Deployment').outputs.appInsightsIK.value]"}
+              }
+            }
+          }         
+     ],
+    "outputs": { }
+  }

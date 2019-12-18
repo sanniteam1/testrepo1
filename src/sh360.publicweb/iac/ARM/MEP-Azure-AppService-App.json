@@ -1,0 +1,100 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "_artifactsLocation": {
+            "type": "string",
+            "metadata":{"description":"Do not modify"}
+        },
+        "_artifactsLocationSasToken": {
+            "type": "securestring",
+            "metadata":{"description":"Do not modify"}
+        }, 
+        "owner": {
+            "type": "string",
+            "defaultValue": "Yno",
+            "metadata":{"description":"Owner of the ResourceGroup/ Subscription"}
+        },
+        "team": {
+            "type": "string",
+            "defaultValue": "Innovation",
+            "metadata":{"description":"Team Name"}
+        },
+        "environment": {
+            "type": "string",
+            "defaultValue": "dev",
+            "metadata":{"description":"Environment"}
+        },
+        "program": {
+            "type": "string",
+            "defaultValue": "mep",
+            "metadata":{"description":"Name of the Program"}
+        },
+        "project": {
+            "type": "string",
+            "defaultValue": "adepsq",
+            "metadata":{"description":"Name of the Project"}
+        },
+        "purpose":  {
+            "type": "string",
+            "defaultValue": "adep",
+            "metadata":{"description":"Purpose of the Deployment"}
+        },
+        "hostingPlanName":{
+            "type": "string",
+            "metadata": {
+                "description":"App Service Hosting Plan Name"
+            }
+        },
+        "appServiceKind":{
+            "type": "string",            
+            "metadata": {
+                "description":"App Service Kind"
+            }
+        },
+        "webAppSKU":{
+          "type": "string",
+            "allowedValues": [
+              "F1",
+              "D1",
+              "B1",
+              "B2",
+              "B3",
+              "S1",
+              "S2",
+              "S3",
+              "P1",
+              "P2",
+              "P3",
+              "P4"
+            ],
+      "defaultValue": "B1",
+      "metadata": {
+        "description": "The pricing tier for the hosting plan."
+          }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2017-08-01",
+            "name": "[parameters('hostingPlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "tags": {
+              "Owner": "[parameters('owner')]",
+              "Team": "[parameters('team')]",
+              "Environment": "[parameters('environment')]",
+              "Purpose": "[parameters('purpose')]"
+          },
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "name": "[parameters('hostingPlanName')]"
+              },
+            "sku": {              
+              "Name":"[parameters('webAppSKU')]"     
+            },
+            "kind": "[parameters('appServiceKind')]"
+          }
+    ],
+    "outputs": {}
+}

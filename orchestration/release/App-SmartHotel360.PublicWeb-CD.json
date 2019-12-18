@@ -1,0 +1,534 @@
+{
+    "source": 1,
+    "revision": 16,
+    "description": null,
+    "createdBy": {
+        "displayName": "Versanni Jae Solis",
+        "url": "https://app.vssps.visualstudio.com/A1cfe120c-94f1-4727-a49e-01ddc61730a7/_apis/Identities/d6bbdb19-5368-6389-b6f1-d5aaac5abf35",
+        "_links": {
+            "avatar": {
+                "href": "https://sanni-solis.visualstudio.com/_apis/GraphProfile/MemberAvatars/aad.ZDZiYmRiMTktNTM2OC03Mzg5LWI2ZjEtZDVhYWFjNWFiZjM1"
+            }
+        },
+        "id": "d6bbdb19-5368-6389-b6f1-d5aaac5abf35",
+        "uniqueName": "versannisolis08@gmail.com",
+        "imageUrl": "https://sanni-solis.visualstudio.com/_api/_common/identityImage?id=d6bbdb19-5368-6389-b6f1-d5aaac5abf35",
+        "descriptor": "aad.ZDZiYmRiMTktNTM2OC03Mzg5LWI2ZjEtZDVhYWFjNWFiZjM1"
+    },
+    "createdOn": "2018-11-15T10:50:36.050Z",
+    "modifiedBy": {
+        "displayName": "Versanni Jae Solis",
+        "url": "https://app.vssps.visualstudio.com/A1cfe120c-94f1-4727-a49e-01ddc61730a7/_apis/Identities/d6bbdb19-5368-6389-b6f1-d5aaac5abf35",
+        "_links": {
+            "avatar": {
+                "href": "https://sanni-solis.visualstudio.com/_apis/GraphProfile/MemberAvatars/aad.ZDZiYmRiMTktNTM2OC03Mzg5LWI2ZjEtZDVhYWFjNWFiZjM1"
+            }
+        },
+        "id": "d6bbdb19-5368-6389-b6f1-d5aaac5abf35",
+        "uniqueName": "versannisolis08@gmail.com",
+        "imageUrl": "https://sanni-solis.visualstudio.com/_api/_common/identityImage?id=d6bbdb19-5368-6389-b6f1-d5aaac5abf35",
+        "descriptor": "aad.ZDZiYmRiMTktNTM2OC03Mzg5LWI2ZjEtZDVhYWFjNWFiZjM1"
+    },
+    "modifiedOn": "2018-11-16T04:35:26.353Z",
+    "isDeleted": false,
+    "variables": {
+        "appServiceName": {
+            "value": "$(program)$(project)Dev"
+        },
+        "program": {
+            "value": "--PROGRAM--"
+        },
+        "project": {
+            "value": "--PROJECT--"
+        },
+        "resourceGroupName": {
+            "value": "$(program)-$(project)-Dev"
+        },
+        "slot": {
+            "value": "--SLOT--"
+        }
+    },
+    "variableGroups": [],
+    "environments": [
+        {
+            "id": 3,
+            "name": "Environment 1",
+            "rank": 1,
+            "owner": {
+                "displayName": null,
+                "id": "d6bbdb19-5368-6389-b6f1-d5aaac5abf35"
+            },
+            "variables": {},
+            "variableGroups": [],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 7
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": 1
+                }
+            },
+            "deployStep": {
+                "id": 8
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 9
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": 2
+                }
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": 0
+                        },
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": [
+                                {
+                                    "artifactItems": [],
+                                    "alias": "_--BUILDDEFINITIONNAME--",
+                                    "artifactType": "Build",
+                                    "artifactDownloadMode": "All"
+                                }
+                            ]
+                        },
+                        "queueId": "--QUEUEID--",
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": 1,
+                    "name": "Run on agent",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "497d490f-eea7-4f2b-ab94-48d9c1acdcb1",
+                            "version": "3.*",
+                            "name": "Deploy Azure App Service",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": null,
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceName": "$(Parameters.ConnectedServiceName)",
+                                "WebAppKind": "$(Parameters.WebAppKind)",
+                                "WebAppName": "$(Parameters.WebAppName)",
+                                "DeployToSlotFlag": "true",
+                                "ResourceGroupName": "$(resourceGroupName)",
+                                "SlotName": "$(slot)",
+                                "ImageSource": "$(Parameters.ImageSource)",
+                                "AzureContainerRegistry": "",
+                                "AzureContainerRegistryLoginServer": "",
+                                "AzureContainerRegistryImage": "",
+                                "AzureContainerRegistryTag": "",
+                                "DockerRepositoryAccess": "public",
+                                "RegistryConnectedServiceName": "",
+                                "PrivateRegistryImage": "",
+                                "PrivateRegistryTag": "",
+                                "DockerNamespace": "$(Parameters.DockerNamespace)",
+                                "DockerRepository": "$(Parameters.DockerRepository)",
+                                "DockerImageTag": "$(Build.BuildId)",
+                                "VirtualApplication": "",
+                                "Package": "$(System.DefaultWorkingDirectory)/_--BUILDDEFINITIONNAME--/app",
+                                "BuiltinLinuxPackage": "$(System.DefaultWorkingDirectory)/**/*.zip",
+                                "RuntimeStack": "$(Parameters.RuntimeStack)",
+                                "StartupCommand": "",
+                                "WebAppUri": "AppServiceURL",
+                                "ScriptType": "",
+                                "InlineScript": "",
+                                "ScriptPath": "",
+                                "GenerateWebConfig": "false",
+                                "WebConfigParameters": "",
+                                "AppSettings": "",
+                                "ConfigurationSettings": "",
+                                "TakeAppOfflineFlag": "true",
+                                "UseWebDeploy": "false",
+                                "SetParametersFile": "",
+                                "RemoveAdditionalFilesFlag": "false",
+                                "ExcludeFilesFromAppDataFlag": "false",
+                                "AdditionalArguments": "",
+                                "RenameFilesFlag": "true",
+                                "XmlTransformation": "false",
+                                "XmlVariableSubstitution": "false",
+                                "JSONFiles": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+                            "version": "2.*",
+                            "name": "Configure Selenium Test Target URL",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "targetType": "inline",
+                                "filePath": "",
+                                "arguments": "",
+                                "script": "$path = Convert-Path .\n$path\n#Set-Location -Path $path\n\n#TODO: Edit config.runsettings file to reflect appservice URL for Selenium Test\n$configFilePath = \"_--BUILDDEFINITIONNAME--/Selenium/config.runsettings\"\n$file = Get-Item $configFilePath\n[xml]$config = Get-Content $file -Raw\n\n$appUrl = \"http://\" + \"$(appServiceName)\" + \"-dev.azurewebsites.net\"\n$node = $config.RunSettings.TestRunParameters.Parameter\n$node.value = $appUrl\n\n$appUrl\n\n$config.Save($file)",
+                                "errorActionPreference": "stop",
+                                "failOnStderr": "false",
+                                "ignoreLASTEXITCODE": "false",
+                                "pwsh": "false",
+                                "workingDirectory": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "5541a522-603c-47ad-91fc-a4b1d163081b",
+                            "version": "2.*",
+                            "name": "Selenium Tests",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "command": "test",
+                                "publishWebProjects": "true",
+                                "projects": "_--BUILDDEFINITIONNAME--/Selenium/SmartHotel360.Selenium.csproj",
+                                "custom": "vstest",
+                                "arguments": "--configuration Release --settings $(System.DefaultWorkingDirectory)/_App-SmartHotel360.PublicWeb-CI/Selenium/config.runsettings --collect \"Code coverage\"",
+                                "publishTestResults": "true",
+                                "zipAfterPublish": "true",
+                                "modifyOutputPath": "true",
+                                "selectOrConfig": "select",
+                                "feedRestore": "",
+                                "includeNuGetOrg": "true",
+                                "nugetConfigPath": "",
+                                "externalEndpoints": "",
+                                "noCache": "false",
+                                "packagesDirectory": "",
+                                "verbosityRestore": "Detailed",
+                                "searchPatternPush": "$(Build.ArtifactStagingDirectory)/*.nupkg",
+                                "nuGetFeedType": "internal",
+                                "feedPublish": "",
+                                "externalEndpoint": "",
+                                "searchPatternPack": "**/*.csproj",
+                                "configurationToPack": "$(BuildConfiguration)",
+                                "outputDir": "$(Build.ArtifactStagingDirectory)",
+                                "nobuild": "false",
+                                "versioningScheme": "off",
+                                "versionEnvVar": "",
+                                "requestedMajorVersion": "1",
+                                "requestedMinorVersion": "0",
+                                "requestedPatchVersion": "0",
+                                "buildProperties": "",
+                                "verbosityPack": "Detailed",
+                                "workingDirectory": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "f045e430-8704-11e6-968f-e717e6411619",
+                            "version": "0.*",
+                            "name": "Swap Slots",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceName": "$(Parameters.ConnectedServiceName)",
+                                "Action": "Swap Slots",
+                                "WebAppName": "$(Parameters.WebAppName)",
+                                "SpecifySlot": "false",
+                                "ResourceGroupName": "$(resourceGroupName)",
+                                "SourceSlot": "$(slot)",
+                                "SwapWithProduction": "true",
+                                "TargetSlot": "",
+                                "PreserveVnet": "false",
+                                "Slot": "production",
+                                "ExtensionsList": "",
+                                "OutputVariable": "",
+                                "AppInsightsResourceGroupName": "",
+                                "ApplicationInsightsResourceName": "",
+                                "ApplicationInsightsWebTestName": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": true,
+                "badgeEnabled": false,
+                "autoLinkWorkItems": false,
+                "pullRequestDeploymentEnabled": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "ReleaseStarted",
+                    "conditionType": 1,
+                    "value": ""
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 0,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 14,
+                "url": "https://sanni-solis.vsrm.visualstudio.com/bda0a592-2ba8-479c-abc7-36f7ee259eb1/_apis/Release/releases/14",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {
+                "inputs": [
+                    {
+                        "aliases": [],
+                        "options": {},
+                        "properties": {},
+                        "name": "ConnectedServiceName",
+                        "label": "Azure subscription",
+                        "defaultValue": "--AZUREENDPOINTID--",
+                        "required": true,
+                        "type": "connectedService:AzureRM",
+                        "helpMarkDown": "Select the Azure Resource Manager subscription for the deployment.",
+                        "visibleRule": "",
+                        "groupName": ""
+                    },
+                    {
+                        "aliases": [],
+                        "options": {
+                            "app": "Web App",
+                            "applinux": "Linux App",
+                            "functionapp": "Function App",
+                            "api": "API App",
+                            "mobileapp": "Mobile App"
+                        },
+                        "properties": {
+                            "EditableOptions": "false"
+                        },
+                        "name": "WebAppKind",
+                        "label": "App type",
+                        "defaultValue": "app",
+                        "type": "pickList",
+                        "helpMarkDown": "",
+                        "groupName": ""
+                    },
+                    {
+                        "aliases": [],
+                        "options": {},
+                        "properties": {
+                            "EditableOptions": "True"
+                        },
+                        "name": "WebAppName",
+                        "label": "App service name",
+                        "defaultValue": "$(appServiceName)",
+                        "required": true,
+                        "type": "pickList",
+                        "helpMarkDown": "Enter or select the name of an existing Azure App Service.",
+                        "visibleRule": "",
+                        "groupName": ""
+                    },
+                    {
+                        "aliases": [],
+                        "options": {
+                            "Registry": "Container Registry",
+                            "Builtin": "Built-in Image"
+                        },
+                        "properties": {},
+                        "name": "ImageSource",
+                        "label": "Image Source",
+                        "defaultValue": "Registry",
+                        "required": true,
+                        "type": "pickList",
+                        "helpMarkDown": "App Service on Linux offers two different options to publish your application <br/> Custom image deployment or App deployment with a built-in platform image. [Learn More](https://go.microsoft.com/fwlink/?linkid=862490)",
+                        "visibleRule": "WebAppKind = applinux",
+                        "groupName": ""
+                    },
+                    {
+                        "aliases": [],
+                        "options": {},
+                        "properties": {},
+                        "name": "DockerNamespace",
+                        "label": "Registry or Namespace",
+                        "defaultValue": "",
+                        "required": true,
+                        "type": "string",
+                        "helpMarkDown": "",
+                        "visibleRule": "WebAppKind = applinux && ImageSource = Registry",
+                        "groupName": ""
+                    },
+                    {
+                        "aliases": [],
+                        "options": {},
+                        "properties": {},
+                        "name": "DockerRepository",
+                        "label": "Repository",
+                        "defaultValue": "",
+                        "required": true,
+                        "type": "string",
+                        "helpMarkDown": "",
+                        "visibleRule": "WebAppKind = applinux && ImageSource = Registry",
+                        "groupName": ""
+                    },
+                    {
+                        "aliases": [],
+                        "options": {
+                            "node|4.4": "Node.js 4.4",
+                            "node|4.5": "Node.js 4.5",
+                            "node|6.2": "Node.js 6.2",
+                            "node|6.6": "Node.js 6.6",
+                            "node|6.9": "Node.js 6.9",
+                            "node|6.10": "Node.js 6.10",
+                            "node|6.11": "Node.js 6.11",
+                            "node|8.0": "Node.js 8.0",
+                            "node|8.1": "Node.js 8.1",
+                            "php|5.6": "PHP 5.6",
+                            "php|7.0": "PHP 7.0",
+                            "dotnetcore|1.0": ".NET Core 1.0",
+                            "dotnetcore|1.1": ".NET Core 1.1",
+                            "dotnetcore|2.0": ".NET Core 2.0",
+                            "ruby|2.3": "Ruby 2.3"
+                        },
+                        "properties": {},
+                        "name": "RuntimeStack",
+                        "label": "Runtime Stack",
+                        "defaultValue": "",
+                        "required": true,
+                        "type": "pickList",
+                        "helpMarkDown": "Select the framework and version.",
+                        "visibleRule": "WebAppKind = applinux && ImageSource = Builtin"
+                    }
+                ],
+                "dataSourceBindings": [
+                    {
+                        "dataSourceName": "AzureRMWebAppNamesByType",
+                        "parameters": {
+                            "WebAppKind": "$(WebAppKind)"
+                        },
+                        "endpointId": "$(ConnectedServiceName)",
+                        "target": "WebAppName"
+                    }
+                ]
+            },
+            "properties": {},
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [],
+            "badgeUrl": "https://sanni-solis.vsrm.visualstudio.com/_apis/public/Release/badge/bda0a592-2ba8-479c-abc7-36f7ee259eb1/2/3"
+        }
+    ],
+    "artifacts": [
+        {
+            "sourceId": "--SOURCEID--",
+            "type": "Build",
+            "alias": "_--BUILDDEFINITIONNAME--",
+            "definitionReference": {
+                "artifactSourceDefinitionUrl": {
+                    "id": "https://sanni-solis.visualstudio.com/_permalink/_build/index?collectionId=69a73e9c-b8b2-4ab4-91f5-85aead599c0b&projectId=bda0a592-2ba8-479c-abc7-36f7ee259eb1&definitionId=92",
+                    "name": ""
+                },
+                "defaultVersionBranch": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionSpecific": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionTags": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionType": {
+                    "id": "latestType",
+                    "name": "Latest"
+                },
+                "definition": {
+                    "id": "--BUILDDEFINITIONID--",
+                    "name": "--BUILDDEFINITIONNAME--"
+                },
+                "project": {
+                    "id": "--PROJECTID--",
+                    "name": "Integration-Test6"
+                }
+            },
+            "isPrimary": true,
+            "isRetained": false
+        }
+    ],
+    "triggers": [
+        {
+            "artifactAlias": "_--BUILDDEFINITIONNAME--",
+            "triggerConditions": [],
+            "triggerType": 1
+        }
+    ],  
+    "releaseNameFormat": "Release-$(rev:r)",
+    "tags": [],
+    "properties": {
+        "DefinitionCreationSource": {
+            "$type": "System.String",
+            "$value": "Other"
+        }
+    },
+    "id": "",
+    "name": "--RELEASEDEFINITIONNAME--",
+    "path": "\\",
+    "projectReference": null
+}

@@ -1,0 +1,343 @@
+﻿@{
+    ViewData["Title"] = "SearchRooms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model SmartHotel360.PublicWeb.Models.ReservationModel
+
+<head>
+    <link href="~/css/jquery-ui-1.12.1.css" rel="stylesheet" />
+    <script src="~/js/jquery-ui-1.12.1.js"></script>
+</head>
+<body>
+    <div id="react-app">
+        <div class="sh-site" data-reactroot="" data-reactid="1" data-react-checksum="387154072">
+            <section class="sh-content" data-reactid="2">
+                <div class="sh-search_rooms" data-reactid="12">
+                    <div class="sh-search sh-search--info" data-reactid="13">
+                        <div class="sh-search-wrapper" data-reactid="14">
+                            <ul class="sh-search-inputs" data-reactid="15">
+                                <li class="sh-search-group" data-reactid="16">@Model.Location</li>
+                                <li class="sh-search-group" data-reactid="17">@Model.StartDate.ToString("MMM dd") - @Model.EndDate.ToString("MMM dd")</li>
+                                <li class="sh-search-group" data-reactid="18">@Model.Rooms @Model.RoomWord, @Model.TotalGuest @Model.GuestWord</li>
+                            </ul>
+                        </div>
+                    </div>
+                    @using (Html.BeginForm())
+                    {@Html.HiddenFor(m => m.RoomId, new { id = "RoomId" });                     
+                        <input id="FormBtn" type="submit" hidden/>
+                    }
+                    <div class="sh-filters" data-reactid="19">
+                        <div class="sh-filters-container" data-reactid="20">
+                            <div class="sh-filter" data-reactid="21">
+                                <div class="sh-switch" data-reactid="22">
+                                    <label class="sh-switch-button" data-reactid="23">
+                                        <input type="checkbox" id="0.08392874313686471" data-reactid="24" /><span class="sh-switch-slider" data-reactid="25"></span>
+                                    </label>
+                                    <label class="sh-switch-title" for="0.08392874313686471" data-reactid="26">Only available</label>
+                                </div>
+                            </div>
+                            <div class="sh-filter_rating" data-reactid="27">
+                                <i id="fifthStar" class="sh-filter_rating-star icon-sh-star " data-reactid="28"></i>
+                                <i id="fourthStar" class="sh-filter_rating-star icon-sh-star " data-reactid="29"></i>
+                                <i id="thirdStar" class="sh-filter_rating-star icon-sh-star " data-reactid="30"></i>
+                                <i id="secondStar" class="sh-filter_rating-star icon-sh-star " data-reactid="31"></i>
+                                <i id="firstStar" class="sh-filter_rating-star icon-sh-star " data-reactid="32"></i>
+                            </div>
+                            <div class="sh-filter" data-reactid="33">
+                                <div data-reactid="34">
+                                    <label id="priceFilterArrow" class="sh-filter-header sh-filter-arrow" data-reactid="35">
+                                        <span id="priceFilterBtn" class="sh-filter-title" data-reactid="36">Price range</span>
+                                        <i id="priceFilterBtn2" class="sh-filter-icon icon-sh-chevron" data-reactid="37"></i>
+                                    </label>
+                                    <section id="priceFilter" class="sh-filter-dropdown" data-reactid="38">
+                                        <div>
+                                            <p>
+                                                <span>Min: <b>$</b><input type="text" readonly id="amount_min" style="border:0; font-weight:bold;"></span>
+                                                <span>Max: <b>$</b><input type="text" readonly id="amount_max" style="border:0; font-weight:bold;"></span>
+                                            </p>
+
+                                            <div id="slider-range"></div>
+
+                                            <ul class="sh-filter-actions" data-reactid="55">
+                                                <li id="priceFilterCancelBtn" class="sh-filter-button sh-filter-button--cancel" data-reactid="56">Cancel</li>
+                                                <li id="priceFilterApplyBtn" class="sh-filter-button sh-filter-button--apply" data-reactid="57">Apply</li>
+                                            </ul>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                            <div class="sh-filter" data-reactid="58">
+                                <div data-reactid="59">
+                                    <label class="sh-filter-header sh-filter-arrow" data-reactid="60"><span class="sh-filter-title" data-reactid="61">Reviews</span><i class="sh-filter-icon icon-sh-chevron" data-reactid="62"></i></label><section class="sh-filter-dropdown" data-reactid="63"><div data-reactid="64"><div class="sh-filter_reviews" data-reactid="65"></div></div><ul class="sh-filter-actions" data-reactid="66"><li class="sh-filter-button sh-filter-button--cancel" data-reactid="67">Cancel</li><li class="sh-filter-button sh-filter-button--apply" data-reactid="68">Apply</li></ul></section>
+                                </div>
+                            </div>
+                            <div class="sh-filter" data-reactid="69">
+                                <div data-reactid="70">
+                                    <label class="sh-filter-header sh-filter-arrow" data-reactid="71">
+                                        <span class="sh-filter-title" data-reactid="72">Services</span>
+                                        <i class="sh-filter-icon icon-sh-chevron" data-reactid="73"></i>
+                                    </label>
+                                    <section class="sh-filter-dropdown" data-reactid="74">
+                                        <div data-reactid="75">
+                                            <div class="sh-filter_services" data-reactid="76">
+                                                <div data-reactid="77"></div><div data-reactid="78"></div>
+                                            </div>
+                                        </div>
+                                        <ul class="sh-filter-actions" data-reactid="79">
+                                            <li class="sh-filter-button sh-filter-button--cancel" data-reactid="80">Cancel</li>
+                                            <li class="sh-filter-button sh-filter-button--apply" data-reactid="81">Apply</li>
+                                        </ul>
+                                    </section>
+                                </div>
+                            </div>
+                            <div class="sh-filter" data-reactid="82">
+                                <div data-reactid="83">
+                                    <label class="sh-filter-header sh-filter-arrow" data-reactid="84">
+                                        <span class="sh-filter-title" data-reactid="85">Cancelation</span>
+                                        <i class="sh-filter-icon icon-sh-chevron" data-reactid="86"></i>
+                                    </label>
+                                    <section class="sh-filter-dropdown" data-reactid="87">
+                                        <div data-reactid="88">
+                                            <div class="sh-filter_cancelation" data-reactid="89"></div>
+                                        </div><ul class="sh-filter-actions" data-reactid="90">
+                                            <li class="sh-filter-button sh-filter-button--cancel" data-reactid="91">Cancel</li>
+                                            <li class="sh-filter-button sh-filter-button--apply" data-reactid="92">Apply</li>
+                                        </ul>
+                                    </section>
+                                </div>
+                            </div>
+                            <div class="sh-filter" data-reactid="93">
+                                <div data-reactid="94">
+                                    <label class="sh-filter-header sh-filter-arrow" data-reactid="95">
+                                        <span class="sh-filter-title" data-reactid="96">Neighborhood</span>
+                                        <i class="sh-filter-icon icon-sh-chevron" data-reactid="97"></i>
+                                    </label>
+                                    <section class="sh-filter-dropdown" style="right:0;" data-reactid="98">
+                                        <div data-reactid="99">
+                                            <div class="sh-filter_neighborhood" data-reactid="100"></div>
+                                        </div>
+                                        <ul class="sh-filter-actions" data-reactid="101">
+                                            <li class="sh-filter-button sh-filter-button--cancel" data-reactid="102">Cancel</li>
+                                            <li class="sh-filter-button sh-filter-button--apply" data-reactid="103">Apply</li>
+                                        </ul>
+                                    </section>
+                                </div>
+                            </div>
+                            <div class="sh-filter" data-reactid="104">
+                                <div data-reactid="105">
+                                    <label class="sh-filter-header sh-filter-arrow" data-reactid="106">
+                                        <span class="sh-filter-title" data-reactid="107">Order by relevance</span>
+                                        <i class="sh-filter-icon icon-sh-chevron" data-reactid="108"></i>
+                                    </label>
+                                    <section class="sh-filter-dropdown" style="right:0;" data-reactid="109">
+                                        <div data-reactid="110">
+                                            <div class="sh-filter_relevance" data-reactid="111"></div>
+                                        </div><ul class="sh-filter-actions" data-reactid="112">
+                                            <li class="sh-filter-button sh-filter-button--cancel" data-reactid="113">Cancel</li>
+                                            <li class="sh-filter-button sh-filter-button--apply" data-reactid="114">Apply</li>
+                                        </ul>
+                                    </section>
+                                </div>
+                            </div>
+                        </div><div class="sh-filters-float" data-reactid="115"><i class="sh-filters-icon icon-sh-map" data-reactid="116"></i></div>
+                    </div>
+                    <div id="RoomItems" class="sh-rooms sh-rooms--full" data-reactid="117">
+                        <span class="sh-rooms-title" data-reactid="118">Smart Rooms</span>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+
+    <script>
+
+        $(document).ready(function () {
+            loadRooms();
+            $("#priceFilterBtn, #priceFilterBtn2").click(function () {
+                $("#priceFilter, #priceFilterArrow").toggleClass("active");
+
+            });
+
+            var roomId;
+            var globalRating;
+            var globalMinPrice;
+            var globalMaxPrice;
+
+            
+
+            //$(".sh-rooms-item").click(function () {
+            //    var n = $(this).attr("n")
+            //    alert("You Clicked!"+" "+n);
+
+            //});
+
+            //rating filter
+            $("#firstStar").click(function () {
+                $(this).addClass("is-active");
+                $("#secondStar, #thirdStar, #fourthStar, #fifthStar").removeClass("is-active");
+                $("#RoomItems").empty();
+                var starValue = 1;
+                reloadRooms(starValue, globalMinPrice, globalMaxPrice);
+
+            });
+
+            $("#secondStar").click(function () {
+                $(this, "#firstStar").addClass("is-active");
+                $("#thirdStar, #fourthStar, #fifthStar").removeClass("is-active");
+                $("#RoomItems").empty();
+                var starValue = 2;
+                reloadRooms(starValue, globalMinPrice, globalMaxPrice);
+
+            });
+
+            $("#thirdStar").click(function () {
+                $(this, "#firstStar, #secondStar").addClass("is-active");
+                $("#fourthStar, #fifthStar").removeClass("is-active");
+                $("#RoomItems").empty();
+                var starValue = 3;
+                reloadRooms(starValue, globalMinPrice, globalMaxPrice);
+            });
+
+            $("#fourthStar").click(function () {
+                $(this, "#firstStar, #secondStar, #thirdStar").addClass("is-active");
+                $("#fifthStar").removeClass("is-active");
+                $("#RoomItems").empty();
+                var starValue = 4;
+                reloadRooms(starValue, globalMinPrice, globalMaxPrice);
+
+            });
+
+            $("#fifthStar").click(function () {
+                $(this, "#firstStar, #secondStar, #thirdStar, #fourthStar").addClass("is-active");
+                $("#RoomItems").empty();
+                var starValue = 5;
+                reloadRooms(starValue, globalMinPrice, globalMaxPrice);
+
+            });
+
+            //var block = '<a class="sh-rooms-item"><div class="sh-room"><header class="sh-room-header"><div class="sh-room-image"> </div><span></span></header><article class="sh-room-info"><div class="sh-room-column sh-room-column--left"><span class="sh-room-title sh-room-row"></span><span class="sh-room-text"></span></div><div class="sh-room-column sh-room-column--right"><div class="sh-room-row"><span class="sh-room-price">$/</span><span class="sh-room-label">Day</span></div><span class="sh-room-stars"></span></div></article></div></a>';
+
+            function loadRooms() {
+                $.ajax({
+                    url: "api/DataAPI/getHotels",
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                            id: @Model.LocationId
+                        },
+                    success: function (response) {
+       
+                        for (var i = 0; i < response.length; i++) {                            
+                            $("#RoomItems").append('<a class="sh-rooms-item" roomid="' + response[i].id + '"><div class="sh-room"><header class="sh-room-header"><div class="sh-room-image" style="background-image: url(&quot;assets/images/' + response[i].picture + '&quot;), url(&quot;assets/images/placeholder.png&quot;);"></div><span></span></header><article class="sh-room-info"><div class="sh-room-column sh-room-column--left"><span class="sh-room-title sh-room-row">' + response[i].name + '</span><span class="sh-room-text">' + response[i].city + '</span></div><div class="sh-room-column sh-room-column--right"><div class="sh-room-row"><span class="sh-room-price">$' + response[i].price + '/</span><span class="sh-room-label">Day</span></div><span id=roomStars' + i + ' class="sh-room-stars"></span></div></article></div></a>')
+                            for (var j = 1; j <= 5; j++) {
+                                if (j <= response[i].rating) {
+                                    $("#roomStars" + i).append('<i class="sh-room-star active icon-sh-star is-active"></i>');
+                                }
+                                else {
+                                    $("#roomStars" + i).append('<i class="sh-room-star active icon-sh-star"></i>');
+                                };
+
+                            }
+
+                        }
+
+                    }              
+
+                });
+
+            };
+
+            function reloadRooms(starValue, minPrice, maxPrice) {
+        globalRating = starValue;
+        globalMinPrice = minPrice;
+        globalMaxPrice = maxPrice;
+                $.ajax({
+                    url: "api/DataAPI/getSortHotels",
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                            id: @Model.LocationId, rating: starValue, min: minPrice, max: maxPrice
+                        },
+                    success: function (response) {
+        
+                        $("#RoomItems").append('<span class="sh-rooms-title" data-reactid="118">Smart Rooms</span>');
+                        for (var i = 0; i < response.length; i++) {
+                            
+                            $("#RoomItems").append('<a class="sh-rooms-item" roomid="' + response[i].id +'"><div class="sh-room"><header class="sh-room-header"><div class="sh-room-image" style="background-image: url(&quot;assets/images/' + response[i].picture + '&quot;), url(&quot;assets/images/placeholder.png&quot;);"></div><span></span></header><article class="sh-room-info"><div class="sh-room-column sh-room-column--left"><span class="sh-room-title sh-room-row">' + response[i].name + '</span><span class="sh-room-text">' + response[i].city + '</span></div><div class="sh-room-column sh-room-column--right"><div class="sh-room-row"><span class="sh-room-price">$' + response[i].price + '/</span><span class="sh-room-label">Day</span></div><span id=roomStars'+i+' class="sh-room-stars"></span></div></article></div></a>')
+                            for (var j = 1; j <= 5; j++) {
+                                if (j <= response[i].rating) {
+                                    $("#roomStars" + i).append('<i class="sh-room-star active icon-sh-star is-active"></i>');
+                                }
+                                else {
+                                    $("#roomStars" + i).append('<i class="sh-room-star active icon-sh-star"></i>');
+                                };
+
+                            }
+
+                        }
+
+                    }
+
+
+
+
+                });
+
+            };
+
+            $("#RoomItems").on('mouseenter', '.sh-rooms-item', function () {
+                $(this).css('cursor', 'pointer');
+
+            });
+            
+
+            $("#RoomItems").on('click', '.sh-rooms-item', function () {
+                var id = $(this).attr("roomid");
+                $("#RoomId").val(id);
+                var x = $("#RoomId").val();
+                $("#FormBtn").click();
+
+            });
+         
+
+            $(function () {
+                $("#slider-range").slider({
+                    range: true,
+                    min: 0,
+                    max: 1000,
+                    values: [0, 1000],
+                    slide: function (event, ui) {
+                        $("#amount_min").val(ui.values[0]);
+                        $("#amount_max").val(ui.values[1]);
+                    }
+                });
+                $("#amount_min").val($("#slider-range").slider("values", 0));
+                $("#amount_max").val($("#slider-range").slider("values", 1));
+
+                $("#priceFilterCancelBtn").click(function () {
+                    $("#priceFilter").removeClass("active");
+                });
+
+                $("#priceFilterApplyBtn").click(function () {
+                    $("#priceFilter").removeClass("active");
+                    $("#RoomItems").empty();
+                    var maxPrice = $("#amount_max").val();
+                    var minPrice = $("#amount_min").val();
+                    reloadRooms(globalRating, minPrice, maxPrice);
+
+                });
+
+               
+            });
+                            
+        });
+
+    </script>
+
+</body>
+

@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "_artifactsLocation": {
+            "type": "string",
+            "metadata":{"description":"Do not modify"}
+        },
+        "_artifactsLocationSasToken": {
+            "type": "securestring",
+            "metadata":{"description":"Do not modify"}
+        }, 
+        "owner": {
+            "type": "string",
+            "defaultValue": "Yno",
+            "metadata":{"description":"Owner of the ResourceGroup/ Subscription"}
+        },
+        "team": {
+            "type": "string",
+            "defaultValue": "Innovation",
+            "metadata":{"description":"Team Name"}
+        },
+        "environment": {
+            "type": "string",
+            "defaultValue": "dev",
+            "metadata":{"description":"Environment"}
+        },
+        "program": {
+            "type": "string",
+            "defaultValue": "mep",
+            "metadata":{"description":"Name of the Program"}
+        },
+        "project": {
+            "type": "string",
+            "defaultValue": "adepsq",
+            "metadata":{"description":"Name of the Project"}
+        },
+        "purpose":  {
+            "type": "string",
+            "defaultValue": "adep",
+            "metadata":{"description":"Purpose of the Deployment"}
+        },
+        "appInsightsName":{
+            "type": "string",
+            "metadata": {
+                "description":"App Insights Name"
+            }
+        }        
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2014-04-01",
+            "name": "[parameters('appInsightsName')]",
+            "type": "Microsoft.Insights/components",
+            "location": "[resourceGroup().location]",
+            "tags": {
+              "Owner": "[parameters('owner')]",
+              "Team": "[parameters('team')]",
+              "Environment": "[parameters('environment')]",
+              "Purpose": "[parameters('purpose')]"
+            },
+            "properties": {
+                "applicationId": "[parameters('appInsightsName')]"
+            }
+          }
+    ],
+    "outputs": {
+        "appInsightsIK":{
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('appInsightsName')), '2014-04-01').InstrumentationKey]"       
+        }
+    }
+}

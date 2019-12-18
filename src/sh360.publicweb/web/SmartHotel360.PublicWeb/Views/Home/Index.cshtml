@@ -1,0 +1,575 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model HomeViewModel
+
+<head>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <link href="~/css/pignose.calendar.min.css" rel="stylesheet" />
+    <link href="@Url.Content("~/css/pignose.calendar.min.css")" rel="stylesheet" />
+
+</head>
+<body>
+
+    <div id="react-app">
+        <div class="sh-site" data-reactroot="" data-reactid="1" data-react-checksum="-1027984380">
+            <section class="sh-content" data-reactid="2">
+                <div class="sh-home" data-reactid="10">
+                    <div class="sh-hero" data-reactid="11">
+                        <div class="sh-hero-wrapper" data-reactid="12">
+                            <div class="sh-hero-title" data-reactid="13">The future of intelligent hospitality and connected workplace.</div>
+                            <ul class="sh-hero-buttons" data-reactid="14">
+                                <li class="sh-hero-button" data-reactid="15">
+                                    <div class="sh-hero-download_app sh-hero-download_app--win" data-reactid="16"></div>
+                                </li>
+                                <li class="sh-hero-button" data-reactid="17">
+                                    <div class="sh-hero-download_app sh-hero-download_app--apple" data-reactid="18"></div>
+                                </li>
+                                <li class="sh-hero-button" data-reactid="19">
+                                    <div class="sh-hero-download_app sh-hero-download_app--google" data-reactid="20"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    @using (Html.BeginForm())
+                    {
+                        <div class="sh-search" data-reactid="21">
+                            <div class="sh-search-wrapper" data-reactid="22">
+                                <ul class="sh-search-tabs" data-reactid="23">
+                                    <li id="smartRoomSearch" class="sh-search-tab is-active" data-reactid="24" onclick="roomTypeSmartRoom()">Smart Room</li>
+                                    <li id="conferenceRoomSearch" class="sh-search-tab " data-reactid="25" onclick="roomTypeConferenceRoom()">Conference Room</li>
+                                </ul>
+
+                                <ul class="sh-search-inputs" data-reactid="26">
+                                    <li class="sh-search-group is-active" id="searchgroup01">
+                                        <div class="sh-search-value " id="WhereDiv">
+
+                                        </div>
+                                        @Html.HiddenFor(m => m.reservation.LocationId)
+                                        @Html.TextBoxFor(m => m.reservation.Location, new { @class = "sh-search-input", placeholder = "Where" })
+
+                                        <section class="sh-search-options sh-search-options--s is-hidden" data-reactid="30">
+                                            <ul></ul>
+                                        </section>
+                                    </li>
+                                    <li class="sh-search-group " id="searchgroup02">
+                                        @Html.HiddenFor(m => m.reservation.StartDate)
+                                        @Html.HiddenFor(m => m.reservation.EndDate)
+                                        <div class="sh-search-value " data-reactid="33"></div>
+                                        <span class="sh-search-input " data-reactid="34" id="WhenDiv">When</span>
+                                        <section class="sh-search-options sh-search-options--s is-hidden" data-reactid="35">
+                                            <ul data-reactid="36"></ul>
+                                        </section>
+                                    </li>
+                                    <li class="sh-search-group " id="searchgroup03">
+                                        <span class="sh-search-input " data-reactid="39" id="GuestDiv">Guests</span>
+                                        <section class="sh-search-options sh-search-options--s is-hidden" data-reactid="40">
+                                            <ul data-reactid="41"></ul>
+                                        </section>
+                                    </li>
+                                    <li class="sh-search-group--button" data-reactid="42">
+                                        <input type="submit" class="find-room sh-search-button btn is-disabled" value="Find a Room" />
+                                    </li>
+                                </ul>
+                                <section class="sh-search-options sh-search-options--m is-hidden" id="AnswerDiv" data-reactid="44">
+                                    <div class="sh-loading is-hidden">loading...</div>
+                                    <ul id="locationList" style="list-style:none"></ul>
+                                    <div class="calendarDiv">
+                                        <div class="calendar"></div>
+                                        <div class="sh-search-buttons">
+                                            <div style="margin: 20px auto 0;">
+                                                <input type="button" class="sh-search-calendar_button btn" value="Reset" />
+                                                <input type="button" class="sh-search-calendar_button sh-search-calendar_button--highlight btn apply_btn" value="Apply">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sh-guests">
+                                        <section class="sh-guests-config">
+                                            <div class="sh-guests-people">
+                                                <div class="sh-guests-people_row">
+                                                    <div class="sh-guests-description">
+                                                        <span class="sh-guests-title">Adults</span>
+                                                        <span class="sh-guests-text">14 years and up</span>
+                                                    </div><div class="sh-increment_decrement ">
+                                                        <a class="sh-increment_decrement-button btn" btn-for="adults" btn-action="minus">
+                                                            <i class="icon-sh-less"></i>
+                                                        </a>
+                                                        @Html.TextBoxFor(m => m.reservation.Adults, "1", new { @class = "sh-increment_decrement-input" })
+                                                        <a class="sh-increment_decrement-button btn" btn-for="adults" btn-action="plus"><i class="icon-sh-plus"></i></a>
+                                                    </div>
+                                                </div><div class="sh-guests-people_row">
+                                                    <div class="sh-guests-description">
+                                                        <span class="sh-guests-title">Kids</span>
+                                                        <span class="sh-guests-text">From 2 to 13 years</span>
+                                                    </div>
+                                                    <div class="sh-increment_decrement ">
+                                                        <a class="sh-increment_decrement-button btn" btn-for="kids" btn-action="minus"><i class="icon-sh-less"></i></a>
+                                                        @Html.TextBoxFor(m => m.reservation.Kids, "0", new { @class = "sh-increment_decrement-input" })
+                                                        <a class="sh-increment_decrement-button btn" btn-for="kids" btn-action="plus">
+                                                            <i class="icon-sh-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="sh-guests-people_row">
+                                                    <div class="sh-guests-description">
+                                                        <span class="sh-guests-title">Baby</span><span class="sh-guests-text">Under 2 years</span>
+                                                    </div>
+                                                    <div class="sh-increment_decrement ">
+                                                        <a class="sh-increment_decrement-button btn" btn-for="babies" btn-action="minus">
+                                                            <i class="icon-sh-less"></i>
+                                                        </a>
+                                                        @Html.TextBoxFor(m => m.reservation.Babies, "0", new { @class = "sh-increment_decrement-input" })
+                                                        <a class="sh-increment_decrement-button btn" btn-for="babies" btn-action="plus"><i class="icon-sh-plus"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="sh-guests-rooms">
+                                                <div class="sh-guests-room sh-guests-room--default is-active">
+                                                    <i class="sh-guests-room_icon sh-guests-room_icon--one icon-sh-key"></i>
+                                                    <span>One Room</span>
+                                                </div>
+                                                <div class="sh-guests-room sh-guests-room--default">
+                                                    <i class="sh-guests-room_icon icon-sh-keys"></i><span>Two Rooms</span>
+                                                </div>
+                                                <div class="sh-guests-room sh-guests-room--counter">
+                                                    <div class="sh-guests-custom">
+                                                        <a class="sh-guests-room_button" btn-for="rooms" btn-action="minus" style="padding-top: 60px; text-align:center">
+                                                            <i class="icon-sh-less"></i>
+                                                        </a>
+                                                        @Html.TextBoxFor(m => m.reservation.Rooms, "1", new { @class = "sh-guests-room_input" })
+
+                                                        <a class="sh-guests-room_button" btn-for="rooms" btn-action="plus" style="padding-top: 60px; text-align:center"><i class="icon-sh-plus"></i></a>
+                                                    </div><span>Rooms</span>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        @*<section class="sh-guests-extra">
+                                                Are you bringing a pet?
+                                                <a class="pet-no sh-guests-extra_button btn is-active" style="padding-top: 14px">No</a>
+                                                <a class="pet-yes sh-guests-extra_button btn " style="padding-top: 14px">Yes</a>
+                                                <a class="pet-go sh-guests-pets_link-hidden" href="/home/Pets">Check it</a>
+                                            </section>*@
+                                    </div>
+                                </section>
+                            </div>
+
+                        </div>
+                    }
+                    <section class="sh-infogrid" data-reactid="46">
+                        <p class="sh-home-title" data-reactid="47">The smart experience</p>
+                        <article class="sh-infogrid-row" data-reactid="48">
+                            <div class="sh-infogrid-column" data-reactid="49">
+                                <i class="sh-infogrid-icon icon-sh-smart-check" data-reactid="50"></i>
+                                <div class="sh-infogrid-description" data-reactid="51">
+                                    <p class="sh-infogrid-subtitle" data-reactid="52">Check in from your phone</p>
+                                    <span class="sh-infogrid-text" data-reactid="53">Use your personal device and the SmartHotel360 app to accelerate your check-in experience. We can skip that reception desk and use your phone as your room key.</span>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="sh-infogrid-row" data-reactid="54">
+                            <div class="sh-infogrid-column" data-reactid="55">
+                                <i class="sh-infogrid-icon icon-sh-smart-finde" data-reactid="56"></i>
+                                <div class="sh-infogrid-description" data-reactid="57">
+                                    <p class="sh-infogrid-subtitle" data-reactid="58">Find and access your room</p>
+                                    <span class="sh-infogrid-text" data-reactid="59">Use the SmartHotel360 app, to quickly find your room location.</span>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="sh-infogrid-row" data-reactid="60">
+                            <div class="sh-infogrid-column" data-reactid="61">
+                                <i class="sh-infogrid-icon icon-sh-smart-perso" data-reactid="62"></i>
+                                <div class="sh-infogrid-description" data-reactid="63">
+                                    <p class="sh-infogrid-subtitle" data-reactid="64">Personalize your experience</p>
+                                    <span class="sh-infogrid-text" data-reactid="65">Use the SmartHotel360 app to configure your home away from home. Set room temperatures, or reserve accommodations, all just a tap away.</span>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="sh-infogrid-row" data-reactid="66">
+                            <div class="sh-infogrid-column" data-reactid="67">
+                                <i class="sh-infogrid-icon icon-sh-smart-green" data-reactid="68"></i>
+                                <div class="sh-infogrid-description" data-reactid="69">
+                                    <p class="sh-infogrid-subtitle" data-reactid="70">Go green</p>
+                                    <span class="sh-infogrid-text" data-reactid="71">From sensors managing our Hotels energy usage to Apps that reduce required work hours, SmartHotel360 goals is to minimization our carbon footprint.</span>
+                                </div>
+                            </div>
+                        </article>
+                    </section>
+                    <span class="sh-home-label" data-reactid="72">For Business travelers</span>
+                    <span class="sh-home-title" data-reactid="73">Smart Conference Room</span>
+
+
+
+                    <div class="sh-rooms_feature" data-reactid="74">
+                        <span id="roomSliderLeftBtn" class="sh-rooms_feature-arrow icon-sh-chevron" data-reactid="75"></span>
+                        <span id="roomSliderRightBtn" class="sh-rooms_feature-arrow sh-rooms_feature-arrow--right icon-sh-chevron" data-reactid="76"></span>
+                        <div data-reactid="77">
+
+                            <div class="sh-rooms_feature-carousel" data-reactid="78">
+                                <ul id="roomSlider" class="sh-rooms_feature-slider" data-reactid="79">
+                                    <li class="sh-rooms_feature-wrapper is-invisible" data-reactid="96">
+                                        <div class="sh-rooms_feature-image" style="background-image:url(null);" data-reactid="97"></div>
+                                        <div class="sh-rooms_feature-box" data-reactid="98">
+                                            <span class="sh-rooms_feature-title" data-reactid="99"></span>
+                                            <span class="sh-rooms_feature-text" data-reactid="100"></span>
+                                        </div>
+                                    </li>
+                                    <li class="sh-rooms_feature-wrapper" data-reactid="101">
+                                        <div class="sh-rooms_feature-image" style="background-image:url(/assets/images/conference_room_1.png);" data-reactid="102"></div>
+                                        <div class="sh-rooms_feature-box" data-reactid="103">
+                                            <span class="sh-rooms_feature-title" data-reactid="104">Book a smart conference room</span>
+                                            <span class="sh-rooms_feature-text" data-reactid="105">Find the perfect place to hold that big meeting. Sign-in, customize and reserve a room now. SmartHotel360 Tools will help you find just what you need.</span>
+                                        </div>
+                                    </li>
+                                    <li class="sh-rooms_feature-wrapper" data-reactid="106">
+                                        <div class="sh-rooms_feature-image" style="background-image:url(/assets/images/conference_room_2.png);" data-reactid="107"></div>
+                                        <div class="sh-rooms_feature-box" data-reactid="108">
+                                            <span class="sh-rooms_feature-title" data-reactid="109">Smart room automatic adaptations</span>
+                                            <span class="sh-rooms_feature-text" data-reactid="110">Using sensors and technology, the SmartHotel360 conference room can help dim the shades if it is a sunny day, or order catering services for your guests. The rooms can help take an ordinary experience to the extraordinary.</span>
+                                        </div>
+                                    </li>
+                                    <li class="sh-rooms_feature-wrapper" data-reactid="111">
+                                        <div class="sh-rooms_feature-image" style="background-image:url(/assets/images/conference_room_3.png);" data-reactid="112"></div>
+                                        <div class="sh-rooms_feature-box" data-reactid="113">
+                                            <span class="sh-rooms_feature-title" data-reactid="114">Person recognition</span>
+                                            <span class="sh-rooms_feature-text" data-reactid="115">Our SmartHotel360 facial recognition technology will provide great insight into your audience. Identify the people in the conference room by name, and gain insight into engagement and efficiency of your presentation.</span>
+                                        </div>
+                                    </li>
+                                    <li class="sh-rooms_feature-wrapper" data-reactid="116">
+                                        <div class="sh-rooms_feature-image" style="background-image:url(/assets/images/conference_room_4.png);" data-reactid="117"></div>
+                                        <div class="sh-rooms_feature-box" data-reactid="118">
+                                            <span class="sh-rooms_feature-title" data-reactid="119">Personalize room on one click</span>
+                                            <span class="sh-rooms_feature-text" data-reactid="120">Use the SmartHotel360 app to customize your presentation space. Create focus by hosting the custom environment you require for your audience. Making an impact just go easier, thanks to SmartHotel360.</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="sh-rooms_feature-button btn" data-reactid="80">Find a conference room</button>
+                    </div>
+                    <section class="sh-smartphone" data-reactid="81">
+                        <div class="sh-smartphone-wrapper" data-reactid="82">
+                            <h2 class="sh-smartphone-title" data-reactid="83">Discover the full smart experience with your smartphone</h2>
+                            <p class="sh-smartphone-description" data-reactid="84">Explore our digital presence. Take a tour of our hotels, explore and plan your next get away. Get tips and recommendation on how to expand your experience with SmartHotel360.</p><img class="sh-smartphone-image" src=" /assets/images/smartphone.png" data-reactid="85" />
+                        </div><div class="sh-smartphone-quote" data-reactid="86">
+                            <div class="sh-smartphone-quote_container" data-reactid="87">
+                                <p class="sh-smartphone-quote_text" data-reactid="88">&quot;This hotel is super high tech! I'd recommend it to anyone.&quot;</p>
+                                <span class="sh-smartphone-quote_name" data-reactid="91">
+                                    <i class="sh-smartphone-quote_icon icon-sh-tweet" data-reactid="92"></i>
+                                    Artour Babaev
+                                </span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <span class="sh-home-title" data-reactid="94">Rooms and Conference Rooms</span>
+
+                    <div class="sh-rooms " data-reactid="138">
+                        <span class="sh-rooms-title" data-reactid="139"></span>
+                        <div class="sh-rooms-item">
+                            <div class="sh-room">
+                                <header class="sh-room-header">
+                                    <div class="sh-room-image" style="background-image: url(&quot;http://sh360imgpublic.blob.core.windows.net/pichotels/60_featured.png&quot;), url(&quot;assets/images/placeholder.png&quot;);"></div>
+                                    <div class="sh-room-button">
+                                        <div class="sh-room-button">Book a room</div>
+                                    </div>
+                                </header><article class="sh-room-info">
+                                    <div class="sh-room-column sh-room-column--left">
+                                        <span class="sh-room-title sh-room-row">Sh360 Family New Orleans</span>
+                                        <span class="sh-room-text">New Orleans, United States</span>
+                                    </div>
+                                    <div class="sh-room-column sh-room-column--right">
+                                        <div class="sh-room-row">
+                                            <span class="sh-room-price">$180/</span>
+                                            <span class="sh-room-label">Night</span>
+                                        </div>
+                                        <span class="sh-room-stars">
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star "></i>
+                                        </span>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                        <div class="sh-rooms-item">
+                            <div class="sh-room">
+                                <header class="sh-room-header">
+                                    <div class="sh-room-image" style="background-image: url(&quot;http://sh360imgpublic.blob.core.windows.net/picconf/74_featured.png&quot;), url(&quot;assets/images/placeholder.png&quot;);"></div>
+                                    <div class="sh-room-button"><div class="sh-room-button">Book a conference Room</div></div>
+                                </header>
+                                <article class="sh-room-info">
+                                    <div class="sh-room-column sh-room-column--left">
+                                        <span class="sh-room-title sh-room-row">Connect() room</span>
+                                        <span class="sh-room-text">New Orleans, United States</span>
+                                    </div><div class="sh-room-column sh-room-column--right">
+                                        <div class="sh-room-row">
+                                            <span class="sh-room-price">$190/</span>
+                                            <span class="sh-room-label">Day</span>
+                                        </div>
+                                        <span class="sh-room-stars">
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star "></i>
+                                        </span>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                        <div class="sh-rooms-item">
+                            <div class="sh-room">
+                                <header class="sh-room-header">
+                                    <div class="sh-room-image" style="background-image: url(&quot;http://sh360imgpublic.blob.core.windows.net/pichotels/80_featured.png&quot;), url(&quot;assets/images/placeholder.png&quot;);"></div>
+                                    <div class="sh-room-button">
+                                        <div class="sh-room-button">Book a room</div>
+                                    </div>
+                                </header>
+                                <article class="sh-room-info">
+                                    <div class="sh-room-column sh-room-column--left">
+                                        <span class="sh-room-title sh-room-row">Sh360 Ressort Rome</span>
+                                        <span class="sh-room-text">Rome, Italy</span>
+                                    </div>
+                                    <div class="sh-room-column sh-room-column--right">
+                                        <div class="sh-room-row">
+                                            <span class="sh-room-price">$180/</span>
+                                            <span class="sh-room-label">Night</span>
+                                        </div>
+                                        <span class="sh-room-stars">
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star "></i>
+                                        </span>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                        <div class="sh-rooms-item">
+                            <div class="sh-room">
+                                <header class="sh-room-header">
+                                    <div class="sh-room-image" style="background-image: url(&quot;http://sh360imgpublic.blob.core.windows.net/picconf/71_featured.png&quot;), url(&quot;assets/images/placeholder.png&quot;);"></div>
+                                    <div class="sh-room-button">
+                                        <div class="sh-room-button">Book a conference Room</div>
+                                    </div>
+                                </header>
+                                <article class="sh-room-info">
+                                    <div class="sh-room-column sh-room-column--left">
+                                        <span class="sh-room-title sh-room-row">NetCore room</span>
+                                        <span class="sh-room-text">Rome, Italy</span>
+                                    </div>
+                                    <div class="sh-room-column sh-room-column--right">
+                                        <div class="sh-room-row">
+                                            <span class="sh-room-price">$190/</span>
+                                            <span class="sh-room-label">Day</span>
+                                        </div>
+                                        <span class="sh-room-stars">
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star is-active"></i>
+                                            <i class="sh-room-star active icon-sh-star "></i>
+                                        </span>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+    <script src="~/js/moment.js"></script>
+    <script src="~/js/pignose.calendar.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#roomSliderLeftBtn").click(function () {
+                $("#roomSlider").css({ "transform": "translateX(0rem)" });
+
+            });
+
+
+            $("#roomSliderRightBtn").click(function () {
+                $("#roomSlider").css({ "transform": "translateX(-30rem)" });
+
+            });
+            var ajaxReq = '';
+            $("#reservation_Location").keyup(function () {
+                $("#AnswerDiv").addClass("is-hidden"); 
+                $("#locationList").html("");
+                if ($("#reservation_Location").val().length > 2) {
+                    $("#AnswerDiv").removeClass("is-hidden");
+                    $("#AnswerDiv #locationList").show();
+                    $("#AnswerDiv .sh-guests").hide();
+                    $("#AnswerDiv .calendarDiv").hide();
+                    $("#AnswerDiv .sh-loading").removeClass("is-hidden");
+                   
+                    ajaxReq = $.ajax({
+                        url: "api/DataAPI/getCities",//Don't forget to replace with your own post URL
+                        type: 'GET',
+                        data: {
+                            searchString: $("#reservation_Location").val()
+                        },
+                        dataType: 'JSON',
+                        beforeSend: function () {
+                            if (ajaxReq != 'ToCancelPrevReq' && ajaxReq.readyState < 4) {
+                                ajaxReq.abort();
+                            }
+                        },
+                        success: function (result) {
+        
+                            $("#AnswerDiv .sh-loading").addClass("is-hidden");
+                            if (result.length > 0) {
+
+                                for (var t = 0; t < result.length; t++) {
+                                    $("#AnswerDiv .sh-loading").addClass("is-hidden");
+                                    $("#locationList").append("<li class=\"sh-search-option\" li-data=\"" + result[t].id + "\">" + result[t].name + ", " + result[t].country + "</li>");
+                                }
+
+                                $("#locationList .sh-search-option").click(function () {
+                                    GoSetWhere($(this));
+                                });
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            if (thrownError == 'abort' || thrownError == 'undefined') return;
+                            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    }); //end ajaxReq
+
+                }
+            });
+
+
+
+
+            var GoSetWhere = function (placeName) {
+                $("#reservation_Location").val($(placeName).html());
+                $("#reservation_LocationId").val($(placeName).attr('li-data'));
+                $("#locationList").html("");
+
+                $('#searchgroup01').removeClass('is-active');
+
+                ActivateStep02();
+
+
+            };
+
+            var ActivateStep02 = function () {
+                $("#AnswerDiv #locationList").hide();
+                $("#AnswerDiv .sh-guests").hide();
+                $("#AnswerDiv .calendarDiv").show();
+                $('#searchgroup02').addClass('is-active');
+                $('#searchgroup02 .sh-search-input').addClass('is-active');
+                $("#AnswerDiv .calendarDiv .apply_btn").prop('disabled', true);
+                $("#AnswerDiv .calendarDiv .apply_btn").unbind("click").click(function () { ActivateStep03(); });
+
+                $(".find-room").addClass('is-disabled');
+                $("#AnswerDiv").removeClass("is-hidden");
+
+                $(".calendar").pignoseCalendar({
+                    multiple: true,
+                    select: function (date, context) {
+                       
+
+                        $("#AnswerDiv .calendarDiv .apply_btn").prop('disabled', true);
+                        $("#WhenDiv").html("");
+                        if (date[0]) {
+                            $('#reservation_StartDate').html(date[0].format('LL'));
+                            $("#WhenDiv").html(date[0].format('ll').split(",")[0] + ' - ');
+                        }
+                        if (date[1]) {
+                            $('#reservation_EndDate').val(date[1].format('LL'));
+                            $("#WhenDiv").html(date[0].format('ll').split(",")[0] + ' - ' + date[1].format('ll').split(",")[0]);
+                            $("#AnswerDiv .calendarDiv .apply_btn").prop('disabled', false);
+                            $(".find-room").removeClass('is-disabled');
+                        }
+                    }
+                });
+
+                $('.icon-arrow-left').removeClass().addClass('glyphicon glyphicon-chevron-left');
+                $('.icon-arrow-right').removeClass().addClass('glyphicon glyphicon-chevron-right');
+               
+            };
+
+            var ActivateStep03 = function () {
+                $('#searchgroup02').removeClass('is-active');
+                $('#searchgroup02 .sh-search-input').removeClass('is-active');
+                $('#searchgroup03').addClass('is-active');
+                $("#AnswerDiv #locationList").hide();
+                $("#AnswerDiv .sh-guests").show();
+                $("#AnswerDiv .calendarDiv").hide();
+                $("#GuestDiv").addClass("is-filled");
+
+                $("#AnswerDiv .sh-increment_decrement-button").unbind("click").click(function () {
+                    switch ($(this).attr('btn-for')) {
+                        case "babies":
+                            if ($(this).attr('btn-action') == "plus")
+                                $('#reservation_Babies').val(parseInt($('#reservation_Babies').val()) + 1);
+                            else if (parseInt($('#reservation_Babies').val()) > 0)
+                                $('#reservation_Babies').val(parseInt($('#reservation_Babies').val()) - 1);
+                            break;
+                        case "kids":
+                            if ($(this).attr('btn-action') == "plus")
+                                $('#reservation_Kids').val(parseInt($('#reservation_Kids').val()) + 1);
+                            else if (parseInt($('#reservation_Kids').val()) > 0)
+                                $('#reservation_Kids').val(parseInt($('#reservation_Kids').val()) - 1);
+                            break;
+                        case "adults":
+                            if ($(this).attr('btn-action') == "plus")
+                                $('#reservation_Adults').val(parseInt($('#reservation_Adults').val()) + 1);
+                            else if (parseInt($('#reservation_Adults').val()) > 0)
+                                $('#reservation_Adults').val(parseInt($('#reservation_Adults').val()) - 1);
+                            break;
+
+                    }
+                });
+
+                $("#AnswerDiv .sh-guests-room_button").unbind("click").click(function () {
+                    if ($(this).attr('btn-action') == "plus")
+                        $('#reservation_Rooms').val(parseInt($('#reservation_Rooms').val()) + 1);
+                    else if (parseInt($('#reservation_Rooms').val()) > 1)
+                        $('#reservation_Rooms').val(parseInt($('#reservation_Rooms').val()) - 1);
+                });
+
+                $("#AnswerDiv .pet-no").click(function () {
+                    $("#AnswerDiv .pet-no").addClass('is-active');
+                    $("#AnswerDiv .pet-yes").removeClass('is-active');
+                    $("#AnswerDiv .pet-go").removeClass('sh-guests-pets_link').addClass('sh-guests-pets_link-hidden');
+                });
+
+                $("#AnswerDiv .pet-yes").click(function () {
+                    $("#AnswerDiv .pet-no").removeClass('is-active');
+                    $("#AnswerDiv .pet-yes").addClass('is-active');
+                    $("#AnswerDiv .pet-go").addClass('sh-guests-pets_link').removeClass('sh-guests-pets_link-hidden');
+                });
+
+                $("#AnswerDiv .pet-go").click(function () {
+                });
+
+            };
+
+
+        });
+
+        function roomTypeSmartRoom() {
+            $("#conferenceRoomSearch").removeClass("is-active")
+            $("#smartRoomSearch").addClass("is-active")
+        }
+
+        function roomTypeConferenceRoom() {
+            $("#smartRoomSearch").removeClass("is-active")
+            $("#conferenceRoomSearch").addClass("is-active")
+        }
+    </script>
+
+
+</body>
+

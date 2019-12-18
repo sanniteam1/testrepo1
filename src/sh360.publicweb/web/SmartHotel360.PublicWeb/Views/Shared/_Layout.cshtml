@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SmartHotel360</title>
+    <base href="~/" />
+
+    <link rel="apple-touch-icon" sizes="57x57" href="~/assets/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/assets/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/assets/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/assets/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/assets/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/assets/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/assets/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/assets/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/assets/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/assets/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/favicon/favicon-16x16.png">
+    @*<link rel="manifest" href="/manifest.json">*@
+    <meta name="msapplication-TileColor" content="#253748">
+    <meta name="msapplication-TileImage" content="~/assets/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#253748">
+
+    <link rel="stylesheet" href="~/css/vendor.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+<body>
+    <div class="shadow"></div>
+    <div class="sh-nav_menu" data-reactid="3">
+        <a class="sh-nav_menu-container" href="/" data-reactid="4">
+            <img class="sh-nav_menu-logo is-home" src="/assets/images/logo.svg" data-reactid="5" />
+        </a>
+        <ul class="sh-nav_menu-links" data-reactid="6">
+            <div class="sh-auth" data-reactid="7">
+                @if (!FakeAuthSettings.IsLoggedIn)
+                {
+                    <li data-reactid="8">
+                        <span class="sh-auth-link" data-reactid="9">Login</span>
+                    </li>
+                }
+                else
+                {
+                    <li class="sh-auth-group" data-reactid="8">
+                        <section class="sh-auth-profile" data-reactid="9">
+                            <div class="sh-auth-name" data-reactid="10">@FakeAuthSettings.Name</div>
+                            <span class="sh-auth-link" data-reactid="11">Logout</span>
+                        </section>
+                        <img class="sh-auth-picture" src="@FakeAuthSettings.PicUrl" title="@FakeAuthSettings.Name" data-reactid="12">
+                    </li>
+                }
+            </div>
+        </ul>
+    </div>
+    @RenderBody()
+    <footer class="sh-footer" data-reactid="102">
+        <section class="sh-footer-content" data-reactid="103">
+            <div data-reactid="104">
+                <div class="sh-footer-section" data-reactid="105">
+                    <img class="sh-footer-logo" src="/assets/images/logo.svg" data-reactid="106" />
+                </div>
+            </div><div data-reactid="107">
+                <div class="sh-footer-section" data-reactid="108">
+                    <ul class="sh-footer-list" data-reactid="109">
+                        <li data-reactid="110"><a class="sh-footer-link" href="#" data-reactid="111">Terms &amp; Conditions</a></li>
+                        <li data-reactid="112"><a class="sh-footer-link" href="#" data-reactid="113">Privacy Policy</a></li>
+                        <li data-reactid="114"><a class="sh-footer-link" href="#" data-reactid="115">Help</a></li>
+                        <!--<li data-reactid="116"><a class="sh-footer-link" href="@Url.Action("ContactUs","Home")" data-reactid="117">Contact</a></li>-->
+                    </ul>
+                </div>
+            </div><div data-reactid="118"><div class="sh-footer-section" data-reactid="119"><p data-reactid="120">Share</p><ul class="sh-footer-social" data-reactid="121"><li data-reactid="122"><a href="#" data-reactid="123"><img class="sh-footer-icon" src="/assets/images/instagram.svg" data-reactid="124" /></a></li><li data-reactid="125"><a href="#" data-reactid="126"><img class="sh-footer-icon" src="/assets/images/facebook.svg" data-reactid="127" /></a></li><li data-reactid="128"><a href="#" data-reactid="129"><img class="sh-footer-icon" src="/assets/images/twitter.svg" data-reactid="130" /></a></li></ul></div></div>
+        </section>
+        <section class="sh-footer-disclaimer" data-reactid="131">This site is built by Microsoft for demonstration purposes only</section>
+    </footer>
+    <script>
+        $(document).ready(function () {
+            $('.sh-auth-link').click(function () { validate(); });
+
+            var validate = function () {
+                $.ajax({
+                    method: "GET",
+                    url: "/home/logmein/",
+                    success: function (result) {
+                        if (result.name != '') {
+                            
+                            $('.sh-auth').html(` <li class="sh-auth-group" data-reactid="8">
+                        <section class="sh-auth-profile" data-reactid="9">
+                            <div class="sh-auth-name" data-reactid="10">` + result.name + `</div>
+                            <span class="sh-auth-link" data-reactid="11">Logout</span>
+                        </section>
+                        <img class="sh-auth-picture" src="` + result.picUrl + `" title="` + result.name + `" data-reactid="12">
+                    </li>`);
+                        }
+                        else {
+                            window.location = "/";
+
+
+                        }
+                        $('.sh-auth-link').unbind('click').click(function () { validate(); });
+                    }
+                });
+
+            };
+        });
+    </script>
+    <script src="~/lib/msal.js" asp-append-version="true"></script>
+    <script src="~/js/vendor.js" asp-append-version="true"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

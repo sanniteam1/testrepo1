@@ -1,0 +1,104 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "_artifactsLocation": {
+          "type": "string",
+          "metadata":{"description":"Do not modify"}
+      },
+      "_artifactsLocationSasToken": {
+          "type": "securestring",
+          "metadata":{"description":"Do not modify"}
+      }, 
+      "owner": {
+          "type": "string",
+          "defaultValue": "Yno",
+          "metadata":{"description":"Owner of the ResourceGroup/ Subscription"}
+      },
+      "team": {
+          "type": "string",
+          "defaultValue": "Innovation",
+          "metadata":{"description":"Team Name"}
+      },
+      "environment": {
+          "type": "string",
+          "defaultValue": "dev",
+          "metadata":{"description":"Environment"}
+      },
+      "program": {
+          "type": "string",
+          "defaultValue": "mep",
+          "metadata":{"description":"Name of the Program"}
+      },
+      "project": {
+          "type": "string",
+          "defaultValue": "adepsq",
+          "metadata":{"description":"Name of the Project"}
+      },
+      "purpose":  {
+          "type": "string",
+          "defaultValue": "adep",
+          "metadata":{"description":"Purpose of the Deployment"}
+      },
+      "storageAccountName" :{
+          "type": "string",
+          "metadata": {
+              "description":"Name of Storage Account Name"
+          }   
+      },
+      "storageAccountType":{
+          "type": "string",
+          "defaultValue": "Standard_LRS",
+          "allowedValues": [
+          "Standard_LRS",
+          "Standard_GRS",
+          "Standard_ZRS",
+          "Premium_LRS"
+        ]
+      }
+     },
+    "variables": { },
+    "resources": [
+      {
+          "comments": "",
+          "type": "Microsoft.Storage/storageAccounts",
+          "sku": {
+              "name": "[parameters('storageAccountType')]"
+          },
+          "kind": "StorageV2",
+          "name": "[parameters('storageAccountName')]",
+          "apiVersion": "2018-02-01",
+          "location": "[resourceGroup().location]",
+          "tags": {
+              "Owner": "[parameters('owner')]",
+              "Team": "[parameters('team')]",
+              "Environment": "[parameters('environment')]",
+              "Purpose": "[parameters('purpose')]"
+          },
+          "scale": null,
+          "properties": {
+              "isHnsEnabled": false,
+              "networkAcls": {
+                  "bypass": "AzureServices",
+                  "virtualNetworkRules": [],
+                  "ipRules": [],
+                  "defaultAction": "Allow"
+              },
+              "supportsHttpsTrafficOnly": true,
+              "encryption": {
+                  "services": {
+                      "file": {
+                          "enabled": true
+                      },
+                      "blob": {
+                          "enabled": true
+                      }
+                  },
+                  "keySource": "Microsoft.Storage"
+              }
+          },
+          "dependsOn": []
+      }
+     ],
+    "outputs": { }
+  }
